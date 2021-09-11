@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            #app {
+                min-height: calc(100vh);
+                background-color: rgba(234, 235, 230, 0.63);
+            }
+
+            img {
+                width: 40vw;
+                height: 40vw;
+                object-fit: cover;
+                text-align: center;
+            }
+
+            [class^='row'] {
+                text-align: center;
+            }
+
+            .row-2 {
+                font-size: 7vw;
+            }
+
+            .row-3 {
+                color: #96979b;
+            }
+
+            .row-2,
+            .row-3,
+            .row-4 {
+                margin-top: 5vw;
+            }
+
+            .row-3 {
+                height: 7vw;
+            }
+
+            .row-4 {
+                font-size: 3vw;
+            }
+
+            .btns {
+                margin-top: 5vw;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                align-content: center;
+            }
+
+            .button {
+                display: inline-block;
+                line-height: 1;
+                white-space: nowrap;
+                cursor: pointer;
+                background: #fff;
+                border: 1px solid #dcdfe6;
+                color: #606266;
+                -webkit-appearance: none;
+                text-align: center;
+                box-sizing: border-box;
+                outline: none;
+                margin: 0;
+                transition: 0.1s;
+                font-weight: 500;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                padding: 12px 20px;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+
+            .primary {
+                color: #fff;
+                background-color: #409eff;
+                border-color: #409eff;
+            }
+
+            .danger {
+                color: #fff;
+                background-color: #f56c6c;
+                border-color: #f56c6c;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="row-1">
+                <img v-bind:src="imgUrls[imgIndex].src" />
+            </div>
+            <div class="row-2">{{imgUrls[imgIndex].name}}</div>
+            <div class="row-3">{{imgUrls[imgIndex].desc}}</div>
+            <div class="btns">
+                <button class="button primary" @click="start">开始</button>
+                <button class="button danger" @click="stop">暂停</button>
+            </div>
+            <div class="row-4 tip" v-html="tip">{{tip}}</div>
+        </div>
+
+        <script>
+            let app = new Vue({
+                el: '#app',
+                data: function () {
+                    // 记录当前播放图片的标记，默认为0，即第一张播放的图片的标记为0
+                    let imgIndex = 0
+                    // 把需要播放的图片存放到该数组中
+                    let imgUrls = [
+                        {
+                            name: '北斗',
+                            src: './static/img/beidou.png'
+                        },
+                        {
+                            name: '达达利亚',
+                            src: './static/img/dadaliya.png'
+                        },
+                        {
+                            name: '迪卢克',
+                            src: './static/img/diluke.png'
+                        },
+                        {
+                            name: '菲谢尔',
+                            src: './static/img/feixieer.png'
+                        },
+                        {
+                            name: '凯亚',
+                            src: './static/img/kaiya.png'
+                        },
+                        {
+                            name: '可莉',
+                            src: './static/img/keli.png',
+                            desc: '警告！！！最低十年起步，最高无期徒刑'
+                        },
+                        {
+                            name: '刻晴',
+                            src: './static/img/keqing.png',
+                            desc: '我一定会变强的！！！'
+                        },
+                        {
+                            name: '莫娜',
+                            src: './static/img/mona.png'
+                        },
+                        {
+                            name: '琴',
+                            src: './static/img/qin.png',
+                            desc: '有什么工作交给我！'
+                        },
+                        {
+                            name: '七七',
+                            src: './static/img/qiqi.png',
+                            desc: '你对僵尸有兴趣吗？'
+                        },
+                        {
+                            name: '砂糖',
+                            src: './static/img/shatang.png',
+                            desc: '你可以成为我的实验对象吗？'
+                        },
+                        {
+                            name: '温蒂',
+                            src: './static/img/wendi.png',
+                            desc: '我想喝酒！'
+                        },
+                        {
+                            name: '香菱',
+                            src: './static/img/xiangling.png',
+                            desc: '史莱姆好吃吗？'
+                        },
+                        {
+                            name: '辛炎',
+                            src: './static/img/xinyan.jpg'
+                        },
+                        {
+                            name: '钟离',
+                            src: './static/img/zhongli.png',
+                            desc: '请借我10W摩拉，我一定还给你。'
+                        }
+                    ]
+                    let intervalFlag = undefined
+                    let isStarting = false
+                    let tip = undefined
+                    return {
+                        imgIndex,
+                        imgUrls,
+                        intervalFlag,
+                        isStarting,
+                        tip
+                    }
+                },
+                methods: {
+                    start: function () {
+                        let _this = this
+                        if (!_this.isStarting) {
+                            _this.isStarting = true
+                            _this.intervalFlag = setInterval(function () {
+                                _this.imgIndex++
+                                if (_this.imgIndex > _this.imgUrls.length - 1) _this.imgIndex = 0
+                            }, 200)
+                        } else {
+                            _this.tip = '<span style="color: #0080006e">已经开始了！</span>'
+                        }
+                    },
+                    stop: function () {
+                        let _this = this
+                        if (_this.isStarting) {
+                            clearInterval(_this.intervalFlag)
+                            _this.isStarting = false
+                        } else {
+                            _this.tip = '<span style="color: #ff00006e">已经暂停了！</span>'
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
