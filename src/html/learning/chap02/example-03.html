@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>字符串API</title>
+    </head>
+    <body>
+        <script>
+            let str = 'hello, world!'
+
+            console.log(str.substring(0, 2)) // "he"：substring 截取字符串
+            console.log(str.slice(0, 2)) // "he"： slice 截取字符串
+            console.log(str.slice(-3)) // "ld!"：负数时，从最后开始往前截取x个字符串
+            console.log(str.split(',')) // "['hello', ' world!']"：以x字符分割字符串
+
+            console.log(str.indexOf('w')) // 7：搜索'w'字符在字符串的索引值
+            console.log(str.indexOf('l', 4)) // 10：字符串存在多个相同字符，搜索索引值为x的'l'字符之后出现的第一个字符的索引
+
+            console.log(str.startsWith('he')) // true：字符串是否以'he'字符为首
+            console.log(str.endsWith('ld!')) // true：字符串是否以'ld!'字符为尾
+
+            console.log(str.charAt(1))
+
+            console.log('x'.padStart(3))
+            console.log('x'.padEnd(3))
+            console.log('x'.padStart(4, '*'))
+            console.log('x'.padEnd(4, '*'))
+
+            console.log('    trim    '.trim())
+            console.log('    start'.trimStart())
+            console.log('end    '.trimEnd())
+
+            console.log(str[0])
+        </script>
+    </body>
+</html>

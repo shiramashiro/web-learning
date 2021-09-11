@@ -1,0 +1,49 @@
+body {
+    margin: 0 300px;
+}
+
+.up {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.down {
+    /* margin: 40px 0 0 0; */
+    /* 上下两个写法等价 */
+    margin-top: 40px;
+}
+
+.down div {
+    font-weight: bold;
+    background-color: #fdf7f7;
+}
+
+.down .body .item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-box {
+    margin: 20px 0;
+}
+
+.input {
+    width: 350px;
+    border: 0;
+    height: 25px;
+    border-radius: 8px;
+}
+
+.down #table {
+    border-collapse: collapse;
+    border: 1px solid #aaa;
+    width: 100%;
+}
+
+.down .rows td {
+    text-align: center;
+}
+
+.rows:nth-child(2n) {
+    background: #cccc;
+}
