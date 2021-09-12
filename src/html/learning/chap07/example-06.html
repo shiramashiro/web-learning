@@ -10,6 +10,7 @@
     <body>
         <div id="app">
             <cu-label :label-val="faVal"></cu-label>
+            <cu-container :name="'object props'"></cu-container>
         </div>
         <script>
             Vue.component('cu-label', {
@@ -33,11 +34,23 @@
                 `
             })
 
+            Vue.component('cu-container', {
+                props: {
+                    name
+                },
+                template: `
+                <div style="background-color: aqua">
+                    <h3>
+                        {{name}}
+                    </h3> 
+                </div>`
+            })
+
             let app = new Vue({
                 el: '#app',
                 data: function () {
                     return {
-                        faVal: 'hello vue component!'
+                        faVal: 'hello!'
                     }
                 }
             })
