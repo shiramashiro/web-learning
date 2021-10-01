@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>组件Props</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <cu-label :label-val="faVal"></cu-label>
+            <cu-container :name="'object props'"></cu-container>
+        </div>
+        <script>
+            Vue.component('cu-label', {
+                props: ['labelVal'],
+                template: `
+                    <div style="background-color: green">
+                        <h1>这是cu-label组件，接收来自于父组件的值：{{labelVal}}</h1>
+                        <h2>
+                            <cu-tag :tag-val="labelVal"></cu-tag>    
+                        </h2>
+                    </div>
+                `
+            })
+
+            Vue.component('cu-tag', {
+                props: ['tagVal'],
+                template: `
+                    <div style="background-color: red">
+                        这是cu-tag组件，接收来自于父组件的值：{{tagVal}}
+                    </div>
+                `
+            })
+
+            Vue.component('cu-container', {
+                props: {
+                    name
+                },
+                template: `
+                <div style="background-color: aqua">
+                    <h3>
+                        {{name}}
+                    </h3> 
+                </div>`
+            })
+
+            let app = new Vue({
+                el: '#app',
+                data: function () {
+                    return {
+                        faVal: 'hello!'
+                    }
+                }
+            })
+            console.log(app)
+        </script>
+    </body>
+</html>
