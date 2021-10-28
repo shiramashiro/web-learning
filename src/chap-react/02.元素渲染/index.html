@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>02.组件</title>
+        <title>02.元素渲染</title>
         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
         <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
@@ -12,12 +12,16 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
-            function HelloComponent(props) {
-                return <h2>This is a React Component! {props.name}</h2>
+            function tick() {
+                const element = (
+                    <div>
+                        <h1>Hello, world!</h1>
+                        <h2>It is {new Date().toLocaleTimeString()}.</h2>
+                    </div>
+                )
+                ReactDOM.render(element, document.getElementById('root'))
             }
-
-            const element = <HelloComponent name="a props for component" />
-            ReactDOM.render(element, document.getElementById('root'))
+            setInterval(tick, 1000)
         </script>
     </body>
 </html>
