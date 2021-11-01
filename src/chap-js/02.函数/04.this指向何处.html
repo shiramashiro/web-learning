@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>04.this指向何处</title>
+    </head>
+    <body>
+        <script>
+            class Demo {
+                clickEvent() {
+                    console.log(this)
+                }
+            }
+
+            let demo = new Demo()
+
+            demo.clickEvent() // 直接调用类方法 clickEvent，this 指向不丢失
+            let result = demo.clickEvent // 把类方法 clickEvent 传递给 result。
+            result() // this 指向丢失
+        </script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+# dependencies
+src/chap-react/react-cli-env/node_modules
+src/chap-react/react-cli-env/.pnp
+src/chap-react/react-cli-env/.pnp.js
+
+# testing
+src/chap-react/react-cli-env/coverage
+
+# production
+src/chap-react/react-cli-env/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
