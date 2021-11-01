@@ -8,17 +8,26 @@
     </head>
     <body>
         <script>
-            class Demo {
-                clickEvent() {
+            let obj = {
+                ObjEvent() {
                     console.log(this)
                 }
             }
 
-            let demo = new Demo()
+            class Obj2 {
+                objEvent() {
+                    console.log(this)
+                }
+            }
 
-            demo.clickEvent() // 直接调用类方法 clickEvent，this 指向不丢失
-            let result = demo.clickEvent // 把类方法 clickEvent 传递给 result。
-            result() // this 指向丢失
+            let things = obj.ObjEvent
+            obj.ObjEvent()
+            things()
+
+            let obj2 = new Obj2()
+            let things2 = obj2.objEvent
+            obj2.objEvent()
+            things2()
         </script>
     </body>
 </html>
