@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>圣诞树</title>
+    </head>
+    <body>
+        <canvas id="tutorial" width="650" height="650"></canvas>
+
+        <script>
+            let canvas = document.getElementById('tutorial')
+            let ctx = canvas.getContext('2d')
+
+            function drawTriangle(point, line1, line2, color = 'rgb(34,139,34)') {
+                let triangle = new Path2D()
+                triangle.moveTo(point.x, point.y)
+                triangle.lineTo(line1.x, line1.y)
+                triangle.lineTo(line2.x, line2.y)
+                triangle.fillStyle = color
+                return triangle
+            }
+
+            // 第一个三角形
+            let tr1 = drawTriangle({ x: 200, y: 0 }, { x: 100, y: 150 }, { x: 300, y: 150 })
+            ctx.fill(tr1)
+            // 第二个三角形
+            let tr2 = drawTriangle({ x: 200, y: 75 }, { x: 75, y: 250 }, { x: 325, y: 250 })
+            ctx.fill(tr2)
+            // 第三个三角形
+            let tr3 = drawTriangle({ x: 200, y: 150 }, { x: 45, y: 350 }, { x: 350, y: 350 })
+            ctx.fill(tr3)
+            // 第四个三角形
+            let tr4 = drawTriangle({ x: 200, y: 225 }, { x: 15, y: 450 }, { x: 375, y: 450 })
+            ctx.fill(tr4)
+        </script>
+    </body>
+</html>
