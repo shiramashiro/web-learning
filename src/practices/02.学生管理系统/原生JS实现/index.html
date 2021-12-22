@@ -82,33 +82,33 @@
         </div>
         <script>
             function add() {
-                let fiveValue = document.getElementsByClassName('input')
-                let addtr = document.createElement('tr')
-                addtr.setAttribute('class', 'rows')
+                let fiveValue = document.getElementsByClassName('input');
+                let addtr = document.createElement('tr');
+                addtr.setAttribute('class', 'rows');
                 for (let i = 0; i < fiveValue.length; i++) {
-                    let addtd = document.createElement('td')
-                    addtd.setAttribute('class', 'cols')
-                    addtd.innerText = fiveValue[i].value
-                    addtr.appendChild(addtd)
+                    let addtd = document.createElement('td');
+                    addtd.setAttribute('class', 'cols');
+                    addtd.innerText = fiveValue[i].value;
+                    addtr.appendChild(addtd);
                 }
-                let table = document.getElementById('table')
-                table.appendChild(addtr)
+                let table = document.getElementById('table');
+                table.appendChild(addtr);
             }
 
             function del() {
-                let table = document.getElementById('table')
-                let delInput = document.getElementById('del-input')
-                table.removeChild(table.childNodes[Number(delInput.value) + 1])
+                let table = document.getElementById('table');
+                let delInput = document.getElementById('del-input');
+                table.removeChild(table.childNodes[Number(delInput.value) + 1]);
             }
 
             function rep() {
-                let table = document.getElementById('table')
-                let delInput = document.getElementById('del-input')
-                let fiveValue = document.getElementsByClassName('input')
-                let rows = table.childNodes[Number(delInput.value) + 1]
-                let cols = rows.childNodes
+                let table = document.getElementById('table');
+                let delInput = document.getElementById('del-input');
+                let fiveValue = document.getElementsByClassName('input');
+                let rows = table.childNodes[Number(delInput.value) + 1];
+                let cols = rows.childNodes;
                 for (let i = 0; i < fiveValue.length; i++) {
-                    cols[i].textContent = fiveValue[i].value
+                    cols[i].textContent = fiveValue[i].value;
                 }
             }
         </script>

@@ -40,21 +40,21 @@
                                 password: '123456'
                             }
                         ]
-                    }
+                    };
                 },
                 methods: {
                     register: function () {
                         this.users.push({
                             username: this.username,
                             password: this.password
-                        })
+                        });
 
                         this.users.forEach((ele) => {
-                            console.log(ele)
-                        })
+                            console.log(ele);
+                        });
                     }
                 }
-            })
+            });
         </script>
     </body>
 </html>

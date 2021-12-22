@@ -103,7 +103,7 @@
                             age: 0
                         },
                         rowNum: 0
-                    }
+                    };
                 },
                 methods: {
                     addItem() {
@@ -113,7 +113,7 @@
                             class: this.student.class,
                             sex: this.student.sex,
                             age: this.student.age
-                        })
+                        });
                     },
                     reviseItem() {
                         this.students[this.rowNum] = {
@@ -122,12 +122,12 @@
                             class: this.student.class,
                             sex: this.student.sex,
                             age: this.student.age
-                        }
+                        };
                     }
                 }
-            }
+            };
 
-            Vue.createApp(app).mount('#app')
+            Vue.createApp(app).mount('#app');
         </script>
     </body>
 </html>

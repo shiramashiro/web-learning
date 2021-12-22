@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Document</title>
+        <title>密码锁</title>
     </head>
 
     <body>
@@ -22,35 +22,28 @@
         </div>
 
         <script>
-            let correctKyes = ['3', '4', '2', '0', '5']
+            let correctKyes = ['3', '4', '2', '0', '5'];
 
-            function insert() {
-                let dynamicPwd = []
-                let elements = document.getElementsByClassName('lock-input')
+            (function insert() {
+                let dynamicPwd = [];
+                let elements = document.getElementsByClassName('lock-input');
                 for (let index = 0; index < elements.length; index++) {
-                    dynamicPwd.push(elements[index].value)
+                    dynamicPwd.push(elements[index].value);
                 }
-                return dynamicPwd
-            }
+                return dynamicPwd;
+            })();
 
             function check() {
-                // 填充密码
-                insert()
-
-                // 错误次数
-                let errorCount = 0
-
-                // 检测密码
+                let errorCount = 0;
                 for (let index = 0; index < dynamicPwd.length; index++) {
                     if (dynamicPwd[index] !== correctKyes[index]) {
-                        errorCount++
+                        errorCount++;
                     }
                 }
-
                 if (errorCount > 0) {
-                    console.log('匹配错误')
+                    console.log('匹配错误');
                 } else {
-                    console.log('匹配成功')
+                    console.log('匹配成功');
                 }
             }
         </script>
