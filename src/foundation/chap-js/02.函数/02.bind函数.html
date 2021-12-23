@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>bind函数</title>
+    </head>
+    <body>
+        <div>
+            <button onclick="bindGetBlog()">click me</button>
+        </div>
+        <script>
+            let blog = {
+                name: 'shiramashiro',
+                url: 'https://www.cnblogs.com/shiramashiro/',
+                unBindGetBlog() {
+                    console.log(`博客园：${this.name}，博客地址：${this.url}`);
+                }
+            };
+
+            // 未绑定的函数，this 指向 Window 对象
+            function unBindGetBlog() {
+                console.log(`博客园：${this.name}，博客地址：${this.url}`);
+            }
+
+            // 绑定的函数，this 指向 blog 对象
+            let bindGetBlog = unBindGetBlog.bind(blog);
+        </script>
+    </body>
+</html>

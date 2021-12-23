@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>class关键字</title>
+    </head>
+    <body>
+        <script>
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+                run() {
+                    return 'run...';
+                }
+                eat() {
+                    return 'eat...';
+                }
+            }
+
+            let xiaohong = new Person('小红', 11);
+            let xiaoming = new Person('小明', 10);
+            console.dir(Person);
+            console.dir(xiaohong);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>函数属性</title>
+    </head>
+    <body>
+        <script>
+            function f(n) {
+                if (Number.isInteger(n) && n > 0) {
+                    if (!(n in f)) {
+                        f[n] = n * f(n - 1);
+                    }
+                    return f[n];
+                } else {
+                    return NaN;
+                }
+            }
+            f[1] = 1; // 初始化函数对象f的自定义属性
+            f(6); // 给函数传入参数
+            f[5]; // 获取记录的第5个自定义属性
+            console.dir(f);
+        </script>
+    </body>
+</html>

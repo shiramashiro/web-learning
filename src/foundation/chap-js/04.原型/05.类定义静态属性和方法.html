@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>类定义静态属性和方法</title>
+    </head>
+    <body>
+        <script>
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+
+                run() {
+                    console.log('normal run...');
+                }
+
+                static run() {
+                    console.log('static run...');
+                }
+            }
+
+            let p = new Person('小明', 12);
+            console.dir(Person);
+        </script>
+    </body>
+</html>

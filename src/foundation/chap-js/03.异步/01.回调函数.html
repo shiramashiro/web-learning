@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>回调函数</title>
+    </head>
+    <body>
+        <script>
+            function calculate(x, y, type) {
+                if (type == 'minus') {
+                    return x - y;
+                } else if (type == 'add') {
+                    return x + y;
+                }
+            }
+
+            let result = calculate(10, 20, 'minus');
+
+            // calculate本体做一些基本的判断（限制）
+            function calculate(x, y, callback) {
+                if (x < 0 || y < 0) {
+                    throw new Error(`Numbers must not be negative!`);
+                }
+                if (typeof x !== 'number' || typeof y !== 'number') {
+                    throw new Error(`Args must be number type!`);
+                }
+                return callback(x, y);
+            }
+
+            // 没有做任何附加限制
+            let result1 = calculate(10, 20, function (x, y) {
+                return x * y;
+            });
+
+            // 做了一些附加限制
+            let result2 = calculate(5, 5, function (x, y) {
+                if (x + y <= 10) {
+                    throw new Error('The sum of the two numbers must be greater than 10');
+                }
+                return x * y;
+            });
+        </script>
+    </body>
+</html>

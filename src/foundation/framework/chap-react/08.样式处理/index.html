@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>样式处理</title>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <style>
+            .divStyle {
+                color: green;
+                font-size: 50px;
+            }
+        </style>
+        <script type="text/babel">
+            class Demo1 extends React.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    // 行内样式处理
+                    return <div style={{ color: 'red', fontSize: '50px' }}>Demo1</div>;
+                }
+            }
+
+            class Demo2 extends React.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    // class样式处理
+                    return <div className="divStyle">Demo2</div>;
+                }
+            }
+
+            function App() {
+                return (
+                    <div id="app">
+                        <Demo1 />
+                        <Demo2 />
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById('root'));
+        </script>
+    </body>
+</html>

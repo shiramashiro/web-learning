@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>书写模式</title>
+        <!-- 书写模式：规定一排文本从左到右排列还是从右到左排列。 -->
+    </head>
+    <style>
+        div {
+            margin: 30px 0;
+            height: 200px;
+            font-size: 30px;
+        }
+
+        /* 竖向排列，文字从左到右流动 */
+        .vertical-lr {
+            writing-mode: vertical-lr;
+        }
+
+        /* 竖向排列，文字从右到左流动 */
+        .vertical-rl {
+            writing-mode: vertical-rl;
+        }
+    </style>
+    <body>
+        <div class="vertical-lr">Being an programmer will have a big challenge that is persistently study!</div>
+        <div class="vertical-rl">Being an programmer will have a big challenge that is persistently study!</div>
+        <div class="normal">Being an programmer will have a big challenge that is persistently study!</div>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>对象深拷贝</title>
+    </head>
+    <body>
+        <script>
+            let user = {
+                uname: 'hello world!',
+                age: 21,
+                sex: '男',
+                lover: {
+                    uname: 'java',
+                    age: 26
+                }
+            };
+
+            let you = {};
+
+            for (let key in user) {
+                you[key] = user[key];
+                if (typeof user[key] == 'object') {
+                    for (let deep in user[key]) {
+                        you[key] = user[key];
+                    }
+                }
+            }
+
+            alert(user.lover === you.lover);
+        </script>
+    </body>
+</html>

@@ -5,4 +5,4 @@ module.exports = {
     trailingComma: 'none',
     bracketSpacing: true,
     tabWidth: 4
-}
+};

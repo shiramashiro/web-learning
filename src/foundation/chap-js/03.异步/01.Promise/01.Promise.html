@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Promise</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * 事件函数。
+             * @param {string} eventName 事件名称
+             * @param {Number} timeout 执行时间
+             * @param {Function} callback 回调函数
+             */
+            function doSomething(eventName, timeout) {
+                console.log(`'${eventName}'正在进行中...`);
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve(`'${eventName}'事件已完成`);
+                    }, timeout);
+                });
+            }
+
+            let promise01 = doSomething('小明购买奶茶', 3000).then((info) => {
+                console.log(info);
+            });
+
+            let promise02 = doSomething('小明和朋友聊天', 1000).then((info) => {
+                console.log(info);
+            });
+
+            // 同步任务
+            console.log('与此同时小明正在刷视频！');
+        </script>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>多列布局</title>
+    </head>
+    <style>
+        .container {
+            /* colum-count 创建的这些列具有弹性的宽度——由浏览器计算出每一列分配多少空间。 */
+            /* column-count: 2; */
+
+            /* column-width 浏览器将按照你指定的宽度尽可能多的创建列；任何剩余的空间之后会被现有的列平分。
+            这意味着你可能无法期望得到你指定宽度，除非容器的宽度刚好可以被你指定的宽度除尽。*/
+            column-width: 200px;
+
+            /* column-gap 为每列添加间隙 */
+            column-gap: 50px;
+
+            /* column-rule 为每列添加分割线样式 */
+            column-rule: 4px dotted rgb(79, 185, 227);
+        }
+
+        .card {
+            background-color: rgb(207, 232, 220);
+            border: 2px solid rgb(79, 185, 227);
+            padding: 10px;
+            margin: 0 0 1em 0;
+            break-inside: avoid;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <h1>Simple multicol example</h1>
+
+            <p class="card">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus aliquam dolor, eu lacinia lorem placerat vulputate. Duis felis orci, pulvinar id metus ut, rutrum luctus orci.
+                Cras porttitor imperdiet nunc, at ultricies tellus laoreet sit amet. Sed auctor cursus massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra egestas ligula.
+                Curabitur vehicula tellus neque, ac ornare ex malesuada et. In vitae convallis lacus. Aliquam erat volutpat. Suspendisse ac imperdiet turpis. Aenean finibus sollicitudin eros pharetra
+                congue. Duis ornare egestas augue ut luctus. Proin blandit quam nec lacus varius commodo et a urna. Ut id ornare felis, eget fermentum sapien.
+            </p>
+
+            <p class="card">
+                Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est. Nam id risus quis ante semper
+                consectetur eget aliquam lorem. Vivamus tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies lectus sed lobortis finibus. Vivamus eu urna eget velit cursus viverra
+                quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            </p>
+        </div>
+    </body>
+</html>

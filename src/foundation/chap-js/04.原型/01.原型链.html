@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>原型链</title>
+    </head>
+    <body>
+        <script>
+            function MaskFactory() {}
+            MaskFactory.prototype.product = '口罩';
+
+            function Market() {}
+            Market.prototype = new MaskFactory();
+
+            let market = new Market(); // 实例化Market对象
+
+            console.dir(Object.getPrototypeOf(market).product); // 口罩
+            // 等同于 console.dir(Market.prototype.product)
+        </script>
+    </body>
+</html>

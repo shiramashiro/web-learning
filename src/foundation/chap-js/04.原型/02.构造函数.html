@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>构造函数</title>
+    </head>
+    <body>
+        <script>
+            function Person(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+
+            // 定义静态方法run
+            Person.run = function run() {
+                console.log('run...');
+            };
+
+            // 定义静态属性type
+            Person.type = '人类';
+
+            let p = new Person('小明', 12);
+            Person.run(); // 调用静态方法run
+            Person.type; // 调用静态属性type => '人类'
+        </script>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>extends和super</title>
+    </head>
+    <body>
+        <script>
+            class NormalMap extends Map {}
+            let normal = new NormalMap();
+
+            class UnnormalMap extends Map {
+                constructor(keyType, valueType) {
+                    super();
+                    this.keyType = keyType;
+                    this.valueType = valueType;
+                }
+            }
+            let unnormalMap = new UnnormalMap();
+
+            class TypedMap extends Map {
+                constructor(keyType, valueType, entries) {
+                    if (entries) {
+                        for (let [k, v] of entries) {
+                            if (typeof k !== keyType || typeof v !== valueType) {
+                                throw new TypeError(`Wrong type for entry [${k}, ${v}]`);
+                            }
+                        }
+                    }
+                    super(entries);
+                    this.keyType = keyType;
+                    this.valueType = valueType;
+                }
+
+                set(key, value) {
+                    if (this.keyType && typeof key !== this.keyType) {
+                        throw new TypeError(`${key} is not of type ${this.keyType}`);
+                    }
+                    if (this.valueType && typeof value !== this.valueType) {
+                        throw new TypeError(`${value} is not of type ${this.valueType}`);
+                    }
+                    return super.set(key, value);
+                }
+            }
+        </script>
+    </body>
+</html>

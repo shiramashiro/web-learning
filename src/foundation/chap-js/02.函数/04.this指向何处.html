@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>this指向问题</title>
+    </head>
+    <body>
+        <script>
+            let obj = {
+                ObjEvent() {
+                    console.log(this);
+                }
+            };
+
+            class Obj2 {
+                objEvent() {
+                    console.log(this);
+                }
+            }
+
+            let things = obj.ObjEvent;
+            obj.ObjEvent();
+            things();
+
+            let obj2 = new Obj2();
+            let things2 = obj2.objEvent;
+            obj2.objEvent();
+            things2();
+        </script>
+    </body>
+</html>
