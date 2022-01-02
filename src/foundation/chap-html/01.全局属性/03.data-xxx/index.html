@@ -7,10 +7,20 @@
         <title>data-xxx 自定义数据属性</title>
     </head>
     <body>
-        <div id="self-data" data-hello="hello " data-world="world!">自定义数据属性</div>
+        <h1>功能：对元素添加一个自定义属性。</h1>
+        <p>说明：自定义属性在一些情况下非常有用。比如，有一排div，通过js想控制这些div，除了js的数组以外，还有最简单的方式就是对元素添加一个自定义属性，并添加索引。</p>
+        <div data-index="1">1</div>
+        <div data-index="2">2</div>
+        <div data-index="3">3</div>
+        <div data-index="4">4</div>
+        <div data-index="5">5</div>
         <script>
-            let domDataset = document.getElementById('self-data').dataset;
-            console.log(domDataset.hello + domDataset.world);
+            let els = document.getElementsByTagName('div');
+            let elIndex = [];
+            for (let i = 0; i < els.length; i++) {
+                elIndex.push(els[i].dataset.index);
+            }
+            console.log(elIndex);
         </script>
     </body>
 </html>
