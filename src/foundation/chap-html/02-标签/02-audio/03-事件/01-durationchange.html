@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>durationchange</title>
+    </head>
+    <body>
+        <audio id="audio" controls src="../audios/warma,Crazy Bucket 陈楒潼 - I really ∞（翻自 Carly Rae Jepsen）.mp3"></audio>
+        <button id="change">switch</button>
+
+        <script>
+            let audio = document.getElementById('audio');
+            let change = document.getElementById('change');
+
+            let musics = ['../audios/warma,Crazy Bucket 陈楒潼 - I really ∞（翻自 Carly Rae Jepsen）.mp3', '../audios/Hanser - Everything is Alright.mp3'];
+            let current = 0;
+
+            change.onclick = function () {
+                current++;
+                if (current > musics.length - 1) {
+                    current = 0;
+                }
+                audio.src = musics[current];
+            };
+
+            audio.addEventListener('durationchange', () => {
+                console.log('duration has been switched!');
+            });
+        </script>
+    </body>
+</html>

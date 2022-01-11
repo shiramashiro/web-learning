@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>formenctype</title>
+    </head>
+    <body>
+        <h1>属性名：formenctype</h1>
+        <p>说明：如果button是submit类型，此属性值指定提交表单到服务器的内容类型。可选值：</p>
+        <ul>
+            <li>application/x-www-form-urlencoded: 未指定时的默认值。</li>
+            <li>multipart/form-data: 如果使用type属性的<input />元素设置文件，使用此值。</li>
+            <li>text/plain</li>
+        </ul>
+        <form id="formdata" action="">
+            <input type="text" />
+            <input type="password" />
+        </form>
+        <button type="submit" form="formdata" formaction="./test.html">submit</button>
+    </body>
+</html>
