@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>duration</title>
+    </head>
+    <body>
+        <h1>属性名：duration</h1>
+        <p>说明：duration 表示 audio 媒体元素的持续时长。</p>
+        <audio id="audio" controls src="../audios/warma,Crazy Bucket 陈楒潼 - I really ∞（翻自 Carly Rae Jepsen）.mp3"></audio>
+        <p>该 audio 元素的duration 数值为：<span id="duration">0</span></p>
+
+        <script>
+            let duration = document.getElementById('duration');
+
+            let audio = document.getElementById('audio');
+            setTimeout(() => {
+                duration.innerText = audio.duration;
+            }, 1000);
+        </script>
+    </body>
+</html>

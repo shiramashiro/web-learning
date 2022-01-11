@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>loop</title>
+    </head>
+    <body>
+        <h1>属性名：loop</h1>
+        <p>说明：如果声明该属性，将循环播放音频。</p>
+        <audio id="audio" controls src="../audios/warma,Crazy Bucket 陈楒潼 - I really ∞（翻自 Carly Rae Jepsen）.mp3"></audio>
+        <button id="loop-btn">循环播放/不循环播放</button>
+
+        <script>
+            let audio = document.getElementById('audio');
+            let loopBtn = document.getElementById('loop-btn');
+
+            let loop = false;
+
+            loopBtn.onclick = function () {
+                loop = !loop;
+                audio.loop = loop;
+            };
+        </script>
+    </body>
+</html>
