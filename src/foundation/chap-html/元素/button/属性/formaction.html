@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>formaction</title>
+    </head>
+    <style>
+        #formbox {
+            padding: 10px;
+            border: 1px solid gray;
+        }
+    </style>
+    <body>
+        <h1>属性名：formaction</h1>
+        <p>说明：表示程序处理 button 提交信息的 URI。如果指定了，将重写 button 表单拥有者的 action 属性。</p>
+        <div id="formbox">
+            <form id="formdata">
+                <p>
+                    <input type="text" />
+                </p>
+                <p>
+                    <input type="password" />
+                </p>
+            </form>
+        </div>
+        <p>
+            <button form="formdata" formaction="test.html">提交表单</button>
+        </p>
+    </body>
+</html>
