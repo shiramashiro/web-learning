@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>属性选择器</title>
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <style>
+            :root[type='a'] {
+                --theme-color: rgb(44, 127, 204);
+            }
+
+            :root[type='b'] {
+                --theme-color: rgb(163, 39, 39);
+            }
+
+            .theme {
+                color: var(--theme-color);
+            }
+        </style>
+        <div class="theme">Theme Color.</div>
+        <button onclick="change()">切换</button>
+
+        <script>
+            let switchFlag = false;
+            function change() {
+                if (switchFlag) {
+                    switchFlag = false;
+                    $('html').attr('type', 'a');
+                } else {
+                    $('html').attr('type', 'b');
+                    switchFlag = true;
+                }
+            }
+        </script>
+    </body>
+</html>
