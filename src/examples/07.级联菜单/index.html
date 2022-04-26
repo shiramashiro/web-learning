@@ -22,64 +22,51 @@
     </style>
     <body>
         <div id="root"></div>
+        <script src="./data.js"></script>
         <script>
-            let cells = [
-                {
-                    text: '解决方案',
-                    child: [
-                        {
-                            text: '通用解决方案',
-                            child: [
-                                {
-                                    text: '网络安全'
-                                },
-                                {
-                                    text: 'DDos防护'
-                                },
-                                {
-                                    text: '云防火墙'
-                                },
-                                {
-                                    text: '网络入侵防护系统'
-                                },
-                                {
-                                    text: '样本智能分析平台'
-                                },
-                                {
-                                    text: '高级威胁检测系统'
-                                }
-                            ]
-                        },
-                        {
-                            text: '行业解决方案'
-                        },
-                        {
-                            text: '云智大数据与 AI'
-                        },
-                        {
-                            text: '区块链解决方案'
-                        }
-                    ]
-                }
-            ];
-            let rootDom = document.getElementById('root');
+            let root = document.getElementById('root');
 
-            function createCellPanel(source) {
-                let ul = document.createElement('ul');
-                ul.setAttribute('class', 'cell-panel');
-                for (let i = 0; i < source.length; i++) {
-                    let li = document.createElement('li');
-                    li.setAttribute('class', 'cell-item');
-                    li.innerText = source[i].text;
-                    ul.appendChild(li);
+            // 返回一个节点
+            function createPanel(data, index) {
+                let panel = document.createElement('ul');
+                panel.setAttribute('class', `panel panel-${index}`);
+                for (let i = 0; i < data.length; i++) {
+                    let item = document.createElement('li');
+                    item.setAttribute('class', `item item-${index}-${i}`);
+                    item.innerText = data[i].text;
+                    panel.appendChild(item);
                 }
-                rootDom.appendChild(ul);
+                return panel;
+            }
+
+            // 1. 创建面板
+            function createCellPanel(data, index) {
+                let panel = document.createElement('ul');
+                panel.setAttribute('class', `panel panel-${index}`);
+                for (let i = 0; i < data.length; i++) {
+                    let item = document.createElement('li');
+                    item.setAttribute('class', `item item-${index}-${i}`);
+                    item.innerText = data[i].text;
+                    panel.appendChild(item);
+                }
+                root.appendChild(panel);
+            }
+
+            // 2. 查询是否有下一个节点
+            function isNextItem(data) {
+                let child = data.child;
+                if (child) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             (function () {
-                for (let i = 0; i < cells.length; i++) {
-                    if (cells[i].child.length > 0) {
-                        createCellPanel(cells[i].child);
+                for (let i = 0; i < data.length; i++) {
+                    createCellPanel(data[i], i);
+                    if (isNextItem(data[i])) {
+                        createCellPanel(data[i].child, i);
                     }
                 }
             })();

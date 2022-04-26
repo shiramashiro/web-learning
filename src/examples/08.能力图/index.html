@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>能力图</title>
+    </head>
+    <body>
+        <canvas width="200" height="200" id="ability-chart"></canvas>
+        <script>
+            let canvas = document.getElementById('ability-chart');
+            let ctx = canvas.getContext('2d');
+
+            function drawLine(startX, startY, lineX, lineY) {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(lineX, lineY);
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            // 求 Y 轴用 sin；求 X 轴用 cos
+            // 有多少根线
+            let items = 6;
+            // 每一根线需要的角度，依次增加
+            let lineDegree = Math.PI / items;
+            let currDegree = lineDegree;
+
+            for (let i = 0; i < items; i++) {
+                currDegree += lineDegree;
+            }
+            drawLine(0, 100, 200, 100);
+            drawLine(100, 0, 100, 200);
+            drawLine(100, 0, 100, 200);
+
+            function drawAnc(startX, startY, lineX, lineY) {
+                ctx.beginPath();
+                ctx.fillStyle = 'rgb(255,255,255)';
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(lineX, lineY);
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            drawAnc(100, 20, 40, 100);
+            drawAnc(100, 150, 40, 100);
+            drawAnc(150, 100, 100, 20);
+            drawAnc(150, 100, 100, 150);
+        </script>
+    </body>
+</html>

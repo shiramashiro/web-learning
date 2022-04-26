@@ -9,18 +9,33 @@
     </head>
     <body>
         <div id="app">
-            <p :style="{'color': fontColor}">Hello World!</p>
+            <div id="body" :style="{ '--font-color': fontColor, '--font-size': fontSize + 'px' }">
+                <p>1 Hello World!</p>
+                <p>2 Hello World!</p>
+                <p>3 Hello World!</p>
+                <p>4 Hello World!</p>
+                <p>5 Hello World!</p>
+            </div>
+            <input v-model="fontColor" placeholder="输入字体大小值" />
+            <input v-model="fontSize" placeholder="输入字体颜色值" />
         </div>
         <script>
             const app = {
                 data() {
                     return {
-                        fontColor: 'red'
+                        fontColor: 'red',
+                        fontSize: '14'
                     };
                 }
             };
 
             Vue.createApp(app).mount('#app');
         </script>
+        <style>
+            p {
+                color: var(--font-color);
+                font-size: var(--font-size);
+            }
+        </style>
     </body>
 </html>
