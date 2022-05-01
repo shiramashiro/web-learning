@@ -6,7 +6,7 @@ const httpServer = createServer(express)
 const io = new Server(httpServer)
 
 express.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(__dirname + '/01.画圆.html')
 })
 
 io.on('connection', (socket) => {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>圆 - 画圆</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    // arc(x, y, radius, startAngle, endAngle, counterclockwise)
+    // x 和 y 是圆的圆心坐标
+    // radius 是圆的半径
+    // startAngle 是圆的起始角度
+    // endAngle 是圆的结束角度
+    // counterclockwise 是否从顺时针画起？如果是，设置为 true，否则设置为 false。
+    ctx.beginPath();
+    ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
+    ctx.lineWidth = 2;
+    ctx.fillStyle = 'gold';
+    ctx.fill();
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+    ctx.closePath();
+</script>
+</body>
+</html>

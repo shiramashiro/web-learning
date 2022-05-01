@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>beginPath 和 closePath 函数</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(60, 80, 50, 0, Math.PI, true);
+    ctx.fillStyle = 'gold';
+    ctx.fill();
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(240, 200, 50, 0, Math.PI, false);
+    ctx.fillStyle = 'gold';
+    ctx.fill();
+    ctx.strokeStyle = 'green';
+    ctx.stroke();
+</script>
+</body>
+</html>
