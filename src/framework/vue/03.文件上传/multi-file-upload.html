@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>多文件上传</title>
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input @change="selected($event)" type="file" multiple />
+            <div>
+                <input v-model="user.name" type="text" placeholder="姓名" />
+            </div>
+            <div>
+                <input v-model="user.sex" type="text" placeholder="性别" />
+            </div>
+            <button @click="submit">提交</button>
+        </div>
+        <script>
+            Vue.createApp({
+                data() {
+                    return {
+                        files: [],
+                        user: {
+                            name: '',
+                            sex: ''
+                        }
+                    };
+                },
+                methods: {
+                    selected(e) {
+                        this.files = e.target.files;
+                    },
+                    submit() {
+                        let formData = new FormData();
+                        for (let index in this.files) {
+                            formData.append(`files`, this.files[index]);
+                        }
+                        formData.append('name', this.user.name);
+                        formData.append('sex', this.user.sex);
+                        axios.post('http://localhost:8080/upload', formData, {
+                            headers: {
+                                'content-type': 'multipart/form-data'
+                            }
+                        });
+                    }
+                }
+            }).mount('#app');
+        </script>
+    </body>
+</html>

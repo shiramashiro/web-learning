@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form id="form" action="http://localhost:8080/upload/user/info" method="post">
+            <input id="uname" type="text" name="uname" />
+            <input id="pwd" type="password" name="pwd" />
+            <input type="submit" value="Submit!" />
+        </form>
+        <button onclick="getFormObj()">获取form对象</button>
+        <script>
+            function getFormObj() {
+                let form = document.getElementById('form');
+                console.dir(form);
+            }
+
+            let formData = new Map([
+                ['uname', 'hello world!'],
+                ['pwd', '123456']
+            ]);
+
+            console.log(formData.get('uname'));
+        </script>
+    </body>
+</html>

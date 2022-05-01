@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>路径 - 画直线</title>
+        <style>
+            #canvas {
+                border: 1px solid rgba(110, 110, 110, 0.8);
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 路径：起始坐标和结束坐标两点之间的连线 -->
+        <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+        <script type="text/javascript">
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            // 开始路径
+            ctx.beginPath();
+            // 起始坐标 x：100，y：100
+            ctx.moveTo(100, 100);
+            // 结束坐标 x：200，y：200
+            ctx.lineTo(200, 200);
+            // 路径颜色
+            ctx.strokeStyle = 'red';
+            // 绘制路径
+            ctx.stroke();
+            // 结束路径
+            ctx.closePath();
+        </script>
+    </body>
+</html>
