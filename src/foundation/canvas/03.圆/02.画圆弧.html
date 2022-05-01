@@ -24,12 +24,7 @@
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
-    // arc(x, y, radius, startAngle, endAngle, counterclockwise)
-    // x 和 y 是圆的圆心坐标
-    // radius 是圆的半径
-    // startAngle 是圆的起始角度
-    // endAngle 是圆的结束角度
-    // counterclockwise 是否从顺时针画起？如果是，设置为 true，否则设置为 false。
+
     ctx.beginPath();
     ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
     ctx.fillStyle = 'gold';
@@ -42,6 +37,7 @@
     ctx.beginPath();
     ctx.moveTo(150, 150 - 100 + 4);
     ctx.lineTo(150, 150 + 100 - 4);
+    ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
@@ -49,6 +45,7 @@
     ctx.beginPath();
     ctx.moveTo(150 - 100 + 4, 150);
     ctx.lineTo(150 + 100 - 4, 150);
+    ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
@@ -56,22 +53,37 @@
     ctx.beginPath();
     ctx.moveTo(150 - 100 + 4, 150);
     ctx.lineTo(150 + 100 - 4, 150);
+    ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
 
     let edge = Math.sin(Math.PI / 4) * 100
+
     ctx.beginPath();
-    let x1 = 250 - (100 - edge);
-    let y1 = 150 - edge;
-    let x2 = 150 - edge;
-    let y2 = 150 + edge;
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
+    let x11 = 250 - (100 - edge) - 4;
+    let y11 = 150 - edge;
+    let x12 = 150 - edge;
+    let y12 = 150 + edge - 4;
+    ctx.lineWidth = 3;
+    ctx.moveTo(x11, y11);
+    ctx.lineTo(x12, y12);
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
 
+
+    ctx.beginPath();
+    let x21 = 150 - edge + 4;
+    let y21 = 150 - edge;
+    let x22 = 150 + edge;
+    let y22 = 250 - (100 - edge) - 4;
+    ctx.lineWidth = 3;
+    ctx.moveTo(x21, y21);
+    ctx.lineTo(x22, y22);
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+    ctx.closePath();
 
 </script>
 </body>
