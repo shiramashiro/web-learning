@@ -25,8 +25,18 @@
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
 
+    // 圆心X点
+    let arcCoordinateX = 150;
+    // 圆心Y点
+    let arcCoordinateY = 150;
+    // 圆半径
+    let arcRadius = 100;
+    // 圆 1/4 的半圆的 45° 的延长线，与圆交点往下作垂直线所构成的三角形的两边：sin(45°) = 对边 / 100
+    let deg45Edge = Math.sin(Math.PI / 4) * arcRadius;
+
+    // 画圆
     ctx.beginPath();
-    ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
+    ctx.arc(arcCoordinateX, arcCoordinateY, arcRadius + 4, 0, Math.PI * 2, true);
     ctx.fillStyle = 'gold';
     ctx.fill();
     ctx.lineWidth = 6;
@@ -34,53 +44,38 @@
     ctx.stroke();
     ctx.closePath();
 
+    // 竖线
     ctx.beginPath();
-    ctx.moveTo(150, 150 - 100 + 4);
-    ctx.lineTo(150, 150 + 100 - 4);
+    ctx.moveTo(arcCoordinateX, arcCoordinateX - arcRadius);
+    ctx.lineTo(arcCoordinateX, arcCoordinateX + arcRadius);
     ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
 
+    // 横线
     ctx.beginPath();
-    ctx.moveTo(150 - 100 + 4, 150);
-    ctx.lineTo(150 + 100 - 4, 150);
+    ctx.moveTo(arcCoordinateX - arcRadius, arcCoordinateX);
+    ctx.lineTo(arcCoordinateX + arcRadius, arcCoordinateY);
     ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
 
+    // 135°斜线
     ctx.beginPath();
-    ctx.moveTo(150 - 100 + 4, 150);
-    ctx.lineTo(150 + 100 - 4, 150);
     ctx.lineWidth = 3;
+    ctx.moveTo(250 - (arcRadius - deg45Edge), arcCoordinateX - deg45Edge);
+    ctx.lineTo(arcCoordinateX - deg45Edge, arcCoordinateX + deg45Edge);
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
 
-    let edge = Math.sin(Math.PI / 4) * 100
-
+    // 45°斜线
     ctx.beginPath();
-    let x11 = 250 - (100 - edge) - 4;
-    let y11 = 150 - edge;
-    let x12 = 150 - edge;
-    let y12 = 150 + edge - 4;
     ctx.lineWidth = 3;
-    ctx.moveTo(x11, y11);
-    ctx.lineTo(x12, y12);
-    ctx.strokeStyle = 'white';
-    ctx.stroke();
-    ctx.closePath();
-
-
-    ctx.beginPath();
-    let x21 = 150 - edge + 4;
-    let y21 = 150 - edge;
-    let x22 = 150 + edge;
-    let y22 = 250 - (100 - edge) - 4;
-    ctx.lineWidth = 3;
-    ctx.moveTo(x21, y21);
-    ctx.lineTo(x22, y22);
+    ctx.moveTo(arcCoordinateX - deg45Edge, arcCoordinateX - deg45Edge);
+    ctx.lineTo(arcCoordinateX + deg45Edge, 250 - (arcRadius - deg45Edge));
     ctx.strokeStyle = 'white';
     ctx.stroke();
     ctx.closePath();
