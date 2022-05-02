@@ -5,7 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>圆 - 画柠檬</title>
+    <script src="https://unpkg.com/vue@next"></script>
     <style>
+        #app {
+            text-align: center;
+        }
+
         #canvas-container {
             display: flex;
             justify-content: center;
@@ -18,88 +23,84 @@
     </style>
 </head>
 <body>
-<div id="canvas-container">
-    <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<div id="app">
+    <div id="canvas-container">
+        <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+    </div>
+    <input v-model="num" v-on:input="onInput" type="number" placeholder="请输入条数"/>
 </div>
 <script type="text/javascript">
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
+    Vue.createApp({
+        data() {
+            return {
+                canvas: null,
+                ctx: null,
+                num: 2,
+                radius: 100,
+                arcX: 150,
+                arcY: 150,
+            };
+        },
+        methods: {
+            onInput() {
+                if (this.num < 2) {
+                    this.num = 2;
+                } else {
+                    this.canvas.width = 300;
+                    this.drawArc();
+                    this.drawHalfArcLine(this.arcX, this.num, this.radius);
+                }
+            },
+            // 画线
+            drawLine(originX, originY, toX, toY) {
+                this.ctx.beginPath();
+                this.ctx.lineWidth = 3;
+                this.ctx.moveTo(originX, originY);
+                this.ctx.lineTo(toX, toY);
+                this.ctx.strokeStyle = 'white';
+                this.ctx.stroke();
+                this.ctx.closePath();
+            },
+            // 画圆线
+            drawHalfArcLine(length, num, radius) {
+                let angleACB = (Math.PI / 2) / num;
+                this.drawLine(length, length - radius, length, length + radius);
+                for (let i = 0; i < num - 1; i++) {
+                    let angleBAC = Math.PI - (Math.PI / 2) - angleACB;
+                    let edgeAB = Math.sin(angleACB) * radius;
+                    let edgeBC = Math.sin(angleBAC) * radius;
 
-    // 圆心X点
-    let arcCoordinateX = 150;
-    // 圆心Y点
-    let arcCoordinateY = 150;
-    // 圆半径
-    let arcRadius = 100;
-    // 圆 1/4 的半圆的 45° 的延长线，与圆交点往下作垂直线所构成的三角形的两边：sin(45°) = 对边 / 100
-    let deg45Edge = Math.sin(Math.PI / 4) * arcRadius;
+                    let x1 = length + edgeAB;
+                    let y1 = length - edgeBC;
+                    let x2 = length - edgeAB;
+                    let y2 = y1;
 
-    // 画圆
-    ctx.beginPath();
-    ctx.arc(arcCoordinateX, arcCoordinateY, arcRadius + 4, 0, Math.PI * 2, true);
-    ctx.fillStyle = 'gold';
-    ctx.fill();
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = 'green';
-    ctx.stroke();
-    ctx.closePath();
+                    this.drawLine(length, length, x1, y1);
+                    this.drawLine(length, length, x2, y2);
+                    angleACB = angleACB + angleACB;
+                }
+                this.drawLine(length - radius, length, length + radius, length);
+            },
+            // 画圆
+            drawArc() {
+                this.ctx.beginPath();
+                this.ctx.arc(this.arcX, this.arcY, this.radius + 4, 0, Math.PI * 2, true);
+                this.ctx.fillStyle = 'gold';
+                this.ctx.fill();
+                this.ctx.lineWidth = 6;
+                this.ctx.strokeStyle = 'green';
+                this.ctx.stroke();
+                this.ctx.closePath();
+            }
+        },
+        mounted() {
+            this.canvas = document.getElementById('canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.drawArc();
+            this.drawHalfArcLine(this.arcX, this.num, this.radius);
+        },
 
-    // 竖线
-    ctx.beginPath();
-    ctx.moveTo(arcCoordinateX, arcCoordinateX - arcRadius);
-    ctx.lineTo(arcCoordinateX, arcCoordinateX + arcRadius);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'white';
-    ctx.stroke();
-    ctx.closePath();
-
-    // 横线
-    ctx.beginPath();
-    ctx.moveTo(arcCoordinateX - arcRadius, arcCoordinateX);
-    ctx.lineTo(arcCoordinateX + arcRadius, arcCoordinateY);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'white';
-    ctx.stroke();
-    ctx.closePath();
-
-    // 135°斜线
-    ctx.beginPath();
-    ctx.lineWidth = 3;
-    ctx.moveTo(250 - (arcRadius - deg45Edge), arcCoordinateX - deg45Edge);
-    ctx.lineTo(arcCoordinateX - deg45Edge, arcCoordinateX + deg45Edge);
-    ctx.strokeStyle = 'white';
-    ctx.stroke();
-    ctx.closePath();
-
-    // 45°斜线
-    ctx.beginPath();
-    ctx.lineWidth = 3;
-    ctx.moveTo(arcCoordinateX - deg45Edge, arcCoordinateX - deg45Edge);
-    ctx.lineTo(arcCoordinateX + deg45Edge, 250 - (arcRadius - deg45Edge));
-    ctx.strokeStyle = 'white';
-    ctx.stroke();
-    ctx.closePath();
-
-    /**
-     * 计算一条线的顶端坐标轴
-     * @param arcY 圆心的 y 点
-     * @param number 线条数量
-     * @param radius 圆的半径
-     */
-    function calcCoordsTop(arcY, number, radius) {
-        let angleABD = Math.PI / (number * 2);
-        let edgeAD = Math.sin(angleABD) * radius;
-        let arcMaxY = arcY + radius;
-        let surplusRadius = radius - edgeAD;
-        let y = arcMaxY - surplusRadius;
-        let angleBAD = (Math.PI / 2) - (Math.PI / 4) - angleABD;
-        let edgeBD = Math.sin(angleBAD) * radius;
-        let arcMaxX = arcY + radius;
-        let surplusRadiusX = radius - edgeBD;
-        let x = arcMaxX - surplusRadiusX;
-        return {x: x, y: y};
-    }
-
+    }).mount('#app');
 </script>
 </body>
 </html>
