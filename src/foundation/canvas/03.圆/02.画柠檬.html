@@ -80,6 +80,26 @@
     ctx.stroke();
     ctx.closePath();
 
+    /**
+     * 计算一条线的顶端坐标轴
+     * @param arcY 圆心的 y 点
+     * @param number 线条数量
+     * @param radius 圆的半径
+     */
+    function calcCoordsTop(arcY, number, radius) {
+        let angleABD = Math.PI / (number * 2);
+        let edgeAD = Math.sin(angleABD) * radius;
+        let arcMaxY = arcY + radius;
+        let surplusRadius = radius - edgeAD;
+        let y = arcMaxY - surplusRadius;
+        let angleBAD = (Math.PI / 2) - (Math.PI / 4) - angleABD;
+        let edgeBD = Math.sin(angleBAD) * radius;
+        let arcMaxX = arcY + radius;
+        let surplusRadiusX = radius - edgeBD;
+        let x = arcMaxX - surplusRadiusX;
+        return {x: x, y: y};
+    }
+
 </script>
 </body>
 </html>
