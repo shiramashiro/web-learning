@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02.textAlign</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+</div>
+<script src="../utils.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    ctx.font = '15px Georgia';
+
+    ctx.beginPath()
+    ctx.textAlign = 'start'; // 文字左对齐，与 left 等效
+    ctx.fillText('(start)Hello World!', 150, 50);
+
+    ctx.beginPath()
+    ctx.textAlign = 'left'; // 文字左对齐，与 start 等效
+    ctx.fillText('(left)Hello World!', 150, 100);
+
+    ctx.beginPath()
+    ctx.textAlign = 'center'; // 文字句中对齐
+    ctx.fillText('(center)Hello World!', 150, 150);
+
+    ctx.beginPath()
+    ctx.textAlign = 'end'; // 文字右对齐，与 right 等效
+    ctx.fillText('(end)Hello World!', 150, 200);
+
+    ctx.beginPath()
+    ctx.textAlign = 'right'; // 文字右对齐，与 end 等效
+    ctx.fillText('(right)Hello World!', 150, 250);
+
+    ctx.beginPath();
+    ctx.moveTo(150, 0);
+    ctx.lineTo(150, 300);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 150);
+    ctx.lineTo(300, 150);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    drawGrid(300, 300, 15);
+</script>
+</body>
+</html>

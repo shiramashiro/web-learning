@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01.绘制文本</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+</div>
+<script src="../utils.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.font = '25px Georgia';
+    ctx.fillText('Hello World!', 150, 150);
+
+    ctx.beginPath();
+    ctx.moveTo(150, 0);
+    ctx.lineTo(150, 300);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 150);
+    ctx.lineTo(300, 150);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    drawGrid(300, 300, 25);
+</script>
+</body>
+</html>
