@@ -8,6 +8,7 @@ function drawGridX(step, canvasH) {
     for (let i = 0; i < canvasH / step; i++) {
         horizontalX += step;
         ctx.beginPath();
+        ctx.lineWidth = 1;
         ctx.moveTo(horizontalX, 0);
         ctx.lineTo(horizontalX, canvasH);
         ctx.strokeStyle = '#adadad';
@@ -20,6 +21,7 @@ function drawGridY(step, canvasW) {
     for (let i = 0; i < canvasW / step; i++) {
         verticalY += step;
         ctx.beginPath();
+        ctx.lineWidth = 1;
         ctx.moveTo(0, verticalY);
         ctx.lineTo(canvasW, verticalY);
         ctx.strokeStyle = '#adadad';

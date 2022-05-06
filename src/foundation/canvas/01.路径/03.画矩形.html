@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>圆 - 画圆</title>
+    <meta charset="UTF-8">
+    <title>03.画矩形</title>
     <style>
         #canvas {
             border: 1px solid rgba(110, 110, 110, 0.8);
@@ -14,15 +12,25 @@
 </head>
 <body>
 <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../utils.js"></script>
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
 
     ctx.beginPath();
-    ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
-    ctx.strokeStyle = 'red';
+    ctx.moveTo(40, 40);
+    ctx.lineTo(220, 40);
+    ctx.lineTo(220, 220);
+    ctx.lineTo(40, 220);
+    ctx.lineTo(40, 40);
+
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = '#e1a32b';
     ctx.stroke();
-    ctx.closePath();
+    ctx.fillStyle = '#689bc5';
+    ctx.fill();
+
+    drawGrid(300, 300 ,20);
 </script>
 </body>
 </html>
