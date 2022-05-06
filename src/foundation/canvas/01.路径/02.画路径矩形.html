@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>03.画矩形</title>
+    <title>03.画路径矩形</title>
     <style>
         #canvas {
             border: 1px solid rgba(110, 110, 110, 0.8);
@@ -22,7 +22,7 @@
     ctx.lineTo(220, 40);
     ctx.lineTo(220, 220);
     ctx.lineTo(40, 220);
-    ctx.lineTo(40, 40);
+    ctx.closePath(); // closePath()，让画笔会到起始位置，即 moveTo 所指的点
 
     ctx.lineWidth = 8;
     ctx.strokeStyle = '#e1a32b';
