@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01.rect()</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+</div>
+<script src="../utils.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    // 矩形不是路径，所以不需要开头使用 ctx.beginPath();
+    // 详细请查看：https://www.cnblogs.com/shiramashiro/p/16196802.html#%E5%85%B1%E5%90%8C%E7%82%B9
+    ctx.rect(20, 20, 160, 200);
+    ctx.stroke();
+
+    drawGrid(300, 300, 20);
+</script>
+</body>
+</html>
