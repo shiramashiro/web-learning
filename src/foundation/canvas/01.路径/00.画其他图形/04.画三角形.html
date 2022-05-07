@@ -19,7 +19,7 @@
 <div id="canvas-container">
     <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
 </div>
-<script src="../utils.js"></script>
+<script src="../../utils.js"></script>
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -28,8 +28,8 @@
     ctx.moveTo(20, 20);
     ctx.lineTo(100, 140);
     ctx.lineTo(20, 140);
-    ctx.lineTo(20, 20);
-    // ctx.closePath();
+    // ctx.lineTo(20, 20);
+    ctx.closePath();
     ctx.stroke();
 
     drawGrid(300, 300, 20);
