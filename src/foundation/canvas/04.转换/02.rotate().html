@@ -24,6 +24,8 @@
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
 
+    drawGrid(400, 400, 20);
+
     ctx.rotate(30 * Math.PI / 180); // 如需旋转 5 度，可规定下面的公式：5 * Math.PI / 180
     ctx.fillRect(50, 20, 100, 50);
 </script>

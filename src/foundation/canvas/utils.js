@@ -1,30 +1,28 @@
 function drawGrid(canvasW, canvasH, step) {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#adadad';
     drawGridX(step, canvasH);
     drawGridY(step, canvasW);
 }
 
 function drawGridX(step, canvasH) {
     let horizontalX = 0;
+    let gridX = new Path2D();
     for (let i = 0; i < canvasH / step; i++) {
         horizontalX += step;
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.moveTo(horizontalX, 0);
-        ctx.lineTo(horizontalX, canvasH);
-        ctx.strokeStyle = '#adadad';
-        ctx.stroke();
+        gridX.moveTo(horizontalX, 0);
+        gridX.lineTo(horizontalX, canvasH);
+        ctx.stroke(gridX);
     }
 }
 
 function drawGridY(step, canvasW) {
     let verticalY = 0;
+    let gridY = new Path2D();
     for (let i = 0; i < canvasW / step; i++) {
         verticalY += step;
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.moveTo(0, verticalY);
-        ctx.lineTo(canvasW, verticalY);
-        ctx.strokeStyle = '#adadad';
-        ctx.stroke();
+        gridY.moveTo(0, verticalY);
+        gridY.lineTo(canvasW, verticalY);
+        ctx.stroke(gridY);
     }
 }
