@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06.回调函数</title>
+</head>
+<body>
+<script>
+    // find 函数有两个参数，传入一个数组；第二个参数为回调函数，每循环一次执行依次。
+    function find(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+            // 回调函数，传入三个参数，范别为数组元素，元素在数组中的索引值，以及元素本身。
+            callback(array[index], index, array);
+        }
+    }
+
+    let array = [
+        {
+            id: 1,
+            name: 'hello'
+        },
+        {
+            id: 2,
+            name: 'world'
+        },
+        {
+            id: 3,
+            name: "javascript"
+        }
+    ];
+
+    // 当 find 函数循环一次时，第二个参数，也就是回调函数就执行依次，回调函数回调三个参数值。
+    find(array, (element, index, array) => {
+        console.log(`id: ${element.id}, name: ${element.name}`)
+    });
+</script>
+</body>
+</html>
