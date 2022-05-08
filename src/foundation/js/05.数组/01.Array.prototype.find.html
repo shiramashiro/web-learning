@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01.Array.prototype.find</title>
+</head>
+<body>
+<script>
+    let array = [1, 4, 3, 10, 5];
+
+    function find(array, predicate) {
+        let len = array.length;
+        let key = 0;
+        while (key < len) {
+            let value = array[key];
+            if (predicate(value, key)) {
+                return value;
+            }
+            key += 1;
+        }
+        return undefined;
+    }
+
+    let r = find(array, (v, k) => v === 10);
+    console.log('r => ' + r);
+</script>
+</body>
+</html>
