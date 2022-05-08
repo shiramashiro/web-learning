@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>02.fillRect()</title>
+    <title>04.clearRect()</title>
     <style>
         #canvas {
             border: 1px solid rgba(110, 110, 110, 0.8);
@@ -19,7 +19,7 @@
 <div id="canvas-container">
     <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
 </div>
-<script src="../utils.js"></script>
+<script src="../../utils.js"></script>
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -27,6 +27,9 @@
     ctx.fillStyle = 'green';
     ctx.fillRect(20, 20, 160, 200);
     ctx.stroke();
+
+    // 清空填充的矩形中某一区域
+    ctx.clearRect(40, 40, 80, 100);
 
     drawGrid(300, 300, 20);
 </script>
