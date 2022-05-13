@@ -1,5 +1,4 @@
 function drawGrid(canvasW, canvasH, step) {
-    ctx.lineWidth = 1;
     ctx.strokeStyle = '#adadad';
     drawGridX(step, canvasH);
     drawGridY(step, canvasW);
