@@ -19,11 +19,10 @@
 <div id="canvas-container">
     <canvas id="canvas" width="600" height="600">Your browser version is too late.</canvas>
 </div>
-<script src="../../../utils.js"></script>
+<script src="../utils.js"></script>
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
-    // drawGrid(600, 600, 20);
 
     let data = [
         {
@@ -82,7 +81,6 @@
         }
     };
 
-    ctx.strokeStyle = 'black';
     drawPolygonPath(5, 40, 10, 300, 300, data, options, ctx);
 
     function drawPolygonPath(layer, step, sides, x, y, data, options, ctx) {
@@ -173,33 +171,6 @@
             ctx.fillStyle = 'white';
             ctx.fill();
         }
-    }
-
-    function sliceY(coordinates) {
-        let coords = [];
-        for (let i = 0; i < data.length; i++) {
-            coords.push(Number(coordinates[i].y.toFixed(6)));
-        }
-        return coords;
-    }
-
-    function sort(data) {
-        let i = 0;
-        while (i < data.length - 1) {
-            for (let j = 0; j < data.length - i - 1; j++) {
-                if (data[j] > data[j + 1]) {
-                    let x = data[j];
-                    data[j] = data[j + 1];
-                    data[j + 1] = x;
-                }
-            }
-            i++;
-        }
-        return data;
-    }
-
-    function uniqueArray(array) {
-        return Array.from(new Set(array));
     }
 </script>
 </body>

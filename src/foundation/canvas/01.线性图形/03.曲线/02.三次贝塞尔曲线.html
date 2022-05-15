@@ -12,9 +12,11 @@
 </head>
 <body>
 <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../../utils.js"></script>
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
+    drawGrid(300, 300, 20);
 
     let startX = 30;
     let startY = 250;
@@ -33,49 +35,47 @@
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(startX, startY, 2, 0, Math.PI * 2, true);
+    ctx.arc(startX, startY, 4, 0, Math.PI * 2, true);
     ctx.strokeStyle = '#7FFFAA';
     ctx.fillStyle = '#7FFFAA';
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(cp1x, cp1y, 2, 0, Math.PI * 2, true);
+    ctx.arc(cp1x, cp1y, 4, 0, Math.PI * 2, true);
     ctx.strokeStyle = '#FFD700';
     ctx.fillStyle = '#FFD700';
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(cp2x, cp2y, 2, 0, Math.PI * 2, true);
+    ctx.arc(cp2x, cp2y, 4, 0, Math.PI * 2, true);
     ctx.strokeStyle = '#6699FF';
     ctx.fillStyle = '#6699FF';
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(x, y, 2, 0, Math.PI * 2, true);
-    ctx.strokeStyle = '#5821b4';
-    ctx.fillStyle = '#5821b4';
+    ctx.arc(x, y, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#b42197';
+    ctx.fillStyle = '#b42197';
     ctx.fill();
     ctx.stroke();
 
+    ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.moveTo(startX, startY);
     ctx.lineTo(cp1x, cp1y);
-    ctx.strokeStyle = '#A9A9A9'
     ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(cp1x, cp1y);
     ctx.lineTo(cp2x, cp2y);
-    ctx.strokeStyle = '#A9A9A9'
     ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(cp2x, cp2y);
     ctx.lineTo(x, y);
-    ctx.strokeStyle = '#A9A9A9'
     ctx.stroke();
 
     ctx.beginPath();
