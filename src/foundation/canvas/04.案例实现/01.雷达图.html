@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>04.雷达图</title>
+    <title>01.雷达图</title>
     <style>
         #canvas {
             border: 1px solid rgba(110, 110, 110, 0.8);
@@ -23,6 +23,7 @@
 <script type="text/javascript">
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
+    drawGrid(600, 600, 50);
 
     let data = [
         {
@@ -132,11 +133,12 @@
         ctx.font = `${options.radar.textSize}px Georgia`;
         ctx.lineWidth = options.dataArea.lineWidth;
         for (let i = 0; i < surface; i++) {
-            if (lastLayer[i].x > originX) {
-                ctx.fillText(data[i].title, lastLayer[i].x + 20, lastLayer[i].y);
+            if (lastLayer[i].x <= originX) {
+                ctx.textAlign = 'right'
             } else {
-                ctx.fillText(data[i].title, lastLayer[i].x - 60, lastLayer[i].y);
+                ctx.textAlign = 'left'
             }
+            ctx.fillText(data[i].title, lastLayer[i].x, lastLayer[i].y);
             let layer = data[i].star - 1;
             let x, y;
             if (layer < 0) {
