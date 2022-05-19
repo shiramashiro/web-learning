@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>属性选择器</title>
-        <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <style>
-            :root[type='a'] {
-                --theme-color: rgb(44, 127, 204);
-            }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>属性选择器</title>
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <style>
+    :root[type='a'] {
+      --theme-color: rgb(44, 127, 204);
+    }
 
-            :root[type='b'] {
-                --theme-color: rgb(163, 39, 39);
-            }
+    :root[type='b'] {
+      --theme-color: rgb(163, 39, 39);
+    }
 
-            .theme {
-                color: var(--theme-color);
-            }
+    .theme {
+      color: var(--theme-color);
+    }
 
-            div[class^="example"] {
-                padding: 10px;
-                border-radius: 10px;
-                border: 1px solid #cccccc;
-                margin: 10px 0 0 0;
-            }
+    div[class^="example"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #CCCCCC;
+      margin: 10px 0 0 0;
+    }
 
-            .ex-title {
-                font-weight: bold;
-            }
+    .ex-title {
+      font-weight: bold;
+    }
 
-            div[class~="zh"] {
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app">
-            <div class="example-01">
-                <div class="ex-title">example-01</div>
-                <div class="ex-body">
-                    <div class="theme">Theme Color.</div>
-                    <button onclick="change()">切换</button>
-                </div>
-            </div>
+    div[class~="zh"] {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="example-01">
+    <div class="ex-title">example-01</div>
+    <div class="ex-body">
+      <div class="theme">Theme Color.</div>
+      <button onclick="change()">切换</button>
+    </div>
+  </div>
 
-            <div class="example-02">
-                <div class="ex-title">example-02</div>
-                <div class="ex-body">
-                    <div class="zh-CH zh">中国</div>
-                    <div class="zh-TW">中國</div>
-                </div>
-            </div>
-        </div>
+  <div class="example-02">
+    <div class="ex-title">example-02</div>
+    <div class="ex-body">
+      <div class="zh-CH zh">中国</div>
+      <div class="zh-TW">中國</div>
+    </div>
+  </div>
+</div>
 
+<script type="text/javascript">
+  let switchFlag = false;
 
-        <script type="text/javascript">
-            let switchFlag = false;
-            function change() {
-                if (switchFlag) {
-                    switchFlag = false;
-                    $('html').attr('type', 'a');
-                } else {
-                    $('html').attr('type', 'b');
-                    switchFlag = true;
-                }
-            }
-        </script>
-    </body>
+  function change() {
+    if ( switchFlag ) {
+      switchFlag = false;
+      $("html").attr("type", "a");
+    } else {
+      $("html").attr("type", "b");
+      switchFlag = true;
+    }
+  }
+</script>
+</body>
 </html>

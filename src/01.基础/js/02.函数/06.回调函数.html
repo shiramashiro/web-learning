@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>06.回调函数</title>
+  <meta charset="UTF-8">
+  <title>06.回调函数</title>
 </head>
 <body>
 <script>
-    let array = [
-        {
-            id: 1,
-            name: 'hello'
-        },
-        {
-            id: 2,
-            name: 'world'
-        },
-        {
-            id: 3,
-            name: "javascript"
-        }
-    ];
-
-    array.find((el, index, obj) => {
-        console.log('el: ' + el);
-        console.log('index: ' + index);
-        console.log('obj: ' + obj);
-    })
-
-    // find 函数有两个参数，传入一个数组；第二个参数为回调函数，每循环一次执行依次。
-    function find(array, callback) {
-        for (let index = 0; index < array.length; index++) {
-            // 回调函数，传入三个参数，范别为数组元素，元素在数组中的索引值，以及元素本身。
-            callback(array[index], index, array);
-        }
+  let array = [
+    {
+      id: 1,
+      name: "hello"
+    },
+    {
+      id: 2,
+      name: "world"
+    },
+    {
+      id: 3,
+      name: "javascript"
     }
+  ];
 
-    // 当 find 函数循环一次时，第二个参数，也就是回调函数就执行依次，回调函数回调三个参数值。
-    find(array, function (element, index, array) {
-        // console.log(`id: ${element.id}, name: ${element.name}`)
-    });
+  array.find((el, index, obj) => {
+    console.log("el: " + el);
+    console.log("index: " + index);
+    console.log("obj: " + obj);
+  });
 
-    (function () {
-        // console.log('匿名函数，因为没有函数值，所以无法调用，也就无法执行。用 () 包裹起来，并在后面再加一个 () 就可以原地执行。')
-    })();
-
-    let vue = function (exports) {
-        // console.log('虽然匿名函数在声明的时候不再 function 定义函数值，但是 () 可以返回一个值，这个值可以作为函数值，然后调用并执行。')
-        // console.log(exports);
+  // find 函数有两个参数，传入一个数组；第二个参数为回调函数，每循环一次执行依次。
+  function find(array, callback) {
+    for ( let index = 0; index < array.length; index++ ) {
+      // 回调函数，传入三个参数，范别为数组元素，元素在数组中的索引值，以及元素本身。
+      callback(array[index], index, array);
     }
+  }
 
-    vue('hello world!');
+  // 当 find 函数循环一次时，第二个参数，也就是回调函数就执行依次，回调函数回调三个参数值。
+  find(array, function (element, index, array) {
+    // console.log(`id: ${element.id}, name: ${element.name}`)
+  });
+
+  (function () {
+    // console.log('匿名函数，因为没有函数值，所以无法调用，也就无法执行。用 () 包裹起来，并在后面再加一个 () 就可以原地执行。')
+  })();
+
+  let vue = function (exports) {
+    // console.log('虽然匿名函数在声明的时候不再 function 定义函数值，但是 () 可以返回一个值，这个值可以作为函数值，然后调用并执行。')
+    // console.log(exports);
+  };
+
+  vue("hello world!");
 </script>
 </body>
 </html>
