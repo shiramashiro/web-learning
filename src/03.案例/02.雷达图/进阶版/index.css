@@ -1,0 +1,39 @@
+#canvas {
+    cursor: pointer;
+    position: absolute;
+    border: 1px solid rgba(110, 110, 110, 0.8);
+    border-radius: 10px;
+}
+
+#canvas-container {
+    width: 400px;
+    height: 400px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#canvas-panel {
+    position: absolute;
+    display: none;
+    border-style: solid;
+    white-space: nowrap;
+    z-index: 9999999;
+    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+    background-color: rgba(50, 50, 50, 0.7);
+    border-width: 0;
+    border-color: rgb(51, 51, 51);
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    font: 14px / 21px "Microsoft YaHei";
+    padding: 5px;
+    left: 29px;
+    top: 145px;
+    pointer-events: none;
+}
+
+#app {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}

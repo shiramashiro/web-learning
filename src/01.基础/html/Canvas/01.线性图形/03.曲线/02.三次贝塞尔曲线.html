@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三次贝塞尔曲线</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    drawGrid(300, 300, 20);
+
+    let startX = 30;
+    let startY = 250;
+    let cp1x = 20;
+    let cp1y = 120;
+    let cp2x = 150;
+    let cp2y = 120;
+    let x = 250;
+    let y = 250;
+
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#FF0000';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(startX, startY, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#7FFFAA';
+    ctx.fillStyle = '#7FFFAA';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cp1x, cp1y, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#FFD700';
+    ctx.fillStyle = '#FFD700';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cp2x, cp2y, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#6699FF';
+    ctx.fillStyle = '#6699FF';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#b42197';
+    ctx.fillStyle = '#b42197';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(cp1x, cp1y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cp1x, cp1y);
+    ctx.lineTo(cp2x, cp2y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cp2x, cp2y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P0", startX + 5, startY + 15);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P1", cp1x, cp1y - 10);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P2", cp2x, cp2y - 10);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P3", x, y + 15);
+</script>
+</body>
+</html>

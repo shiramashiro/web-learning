@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>beginPath 和 closePath 函数</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    drawGrid(300, 300, 20);
+
+    ctx.arc(100, 80, 60, 0, Math.PI, true);
+    ctx.fillStyle = 'gold';
+    ctx.fill();
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    ctx.arc(220, 180, 60, 0, Math.PI, false);
+    ctx.fillStyle = 'gold';
+    ctx.fill();
+    ctx.strokeStyle = 'green';
+    ctx.stroke();
+</script>
+</body>
+</html>

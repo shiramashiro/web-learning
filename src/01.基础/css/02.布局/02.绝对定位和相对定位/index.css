@@ -1,0 +1,30 @@
+.node {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+.fa-node {
+    position: relative;
+}
+
+.node1 {
+    background-color: #00B7FF;
+}
+
+.node2 {
+    background-color: aquamarine;
+    position: absolute;
+}
+
+.node3 {
+    background-color: aqua;
+}
+
+.node4 {
+    background-color: #7979de;
+}
+
+.node5 {
+    background-color: #c4a0cc;
+}

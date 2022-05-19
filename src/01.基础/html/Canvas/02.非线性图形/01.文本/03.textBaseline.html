@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02.textBaseline</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="canvas" width="400" height="400">Your browser version is too late.</canvas>
+</div>
+<script src="../../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    ctx.font = '20px Georgia';
+
+    ctx.beginPath()
+    ctx.textBaseline = 'top'; // 文字左对齐，与 left 等效
+    ctx.fillText('top', 0, 200);
+
+    ctx.beginPath()
+    ctx.textBaseline = 'bottom'; // 文字左对齐，与 start 等效
+    ctx.fillText('bottom', 50, 200);
+
+    ctx.beginPath()
+    ctx.textBaseline = 'middle'; // 文字句中对齐
+    ctx.fillText('middle', 140, 200);
+
+    ctx.beginPath()
+    ctx.textBaseline = 'alphabetic'; // 文字右对齐，与 right 等效
+    ctx.fillText('alphabetic', 210, 200);
+
+    ctx.beginPath()
+    ctx.textBaseline = 'hanging'; // 文字右对齐，与 end 等效
+    ctx.fillText('hanging', 310, 200);
+
+    ctx.beginPath();
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, 400);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 200);
+    ctx.lineTo(400, 200);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+    drawGrid(400, 400, 20);
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02.rotate()</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container">
+    <canvas id="canvas" width="400" height="400">Your browser version is too late.</canvas>
+</div>
+<script src="../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    drawGrid(400, 400, 20);
+
+    ctx.rotate(30 * Math.PI / 180); // 如需旋转 5 度，可规定下面的公式：5 * Math.PI / 180
+    ctx.fillRect(50, 20, 100, 50);
+</script>
+</body>
+</html>

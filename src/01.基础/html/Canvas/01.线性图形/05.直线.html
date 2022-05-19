@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>01.画直线</title>
+        <style>
+            #canvas {
+                border: 1px solid rgba(110, 110, 110, 0.8);
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+        <script src="../utils/draw_grid.js"></script>
+        <script type="text/javascript">
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            ctx.beginPath();
+            ctx.moveTo(100, 100);
+            ctx.lineTo(200, 200);
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(100, 0);
+            ctx.lineTo(100, 100);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#e59292';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(100, 100, 3, 0, Math.PI * 2, true);
+            ctx.stroke();
+            ctx.fillStyle = '#e59292';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(0, 100);
+            ctx.lineTo(100, 100);
+            ctx.strokeStyle = '#e59292';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(0, 200);
+            ctx.lineTo(200, 200);
+            ctx.strokeStyle = '#e59292';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(200, 200, 3, 0, Math.PI * 2, true);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(200, 0);
+            ctx.lineTo(200, 200);
+            ctx.strokeStyle = '#e59292';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.font = '16px Georgia';
+            ctx.fillText('(100, 100)', 105, 100);
+
+            ctx.beginPath();
+            ctx.font = '16px Georgia';
+            ctx.fillText('(200, 200)', 205, 200);
+
+            drawGrid(300, 300 ,20);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拥有浮动面板的雷达图</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div id="app">
+    <div id="canvas-container">
+        <canvas id="canvas" width="400" height="400">Your browser version is too late.</canvas>
+        <div id="canvas-panel">
+        </div>
+    </div>
+</div>
+<script src="../utils/canvas_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    drawGrid(400, 400, 40);
+
+    let data = [
+        {
+            title: 'js',
+            star: 4,
+        },
+        {
+            title: 'ts',
+            star: 2,
+        },
+        {
+            title: 'html',
+            star: 5,
+        },
+        {
+            title: 'css',
+            star: 4,
+        },
+        {
+            title: 'vue',
+            star: 3,
+        },
+        {
+            title: 'uniapp',
+            star: 3,
+        }
+    ];
+
+    let options = {
+        radar: {
+            lineWidth: 1,
+            lineColor: 'black',
+            textColor: 'black',
+            textSize: 16,
+        },
+        dataArea: {
+            lineWidth: 2,
+            lineColor: 'rgba(68, 226, 155, 1)',
+            fillColor: 'rgba(81, 182, 137, 0.6)',
+        }
+    };
+
+    drawPolygonPath(5, 30, 6, 200, 200, data, options, ctx);
+
+    function drawPolygonPath(layer, step, sides, x, y, data, options, ctx) {
+        let coords = [];
+        let radius = step;
+        ctx.strokeStyle = options.radar.lineColor;
+        ctx.lineWidth = options.radar.lineWidth;
+        for (let j = 0; j < layer; j++) {
+            ctx.beginPath();
+            let averageAngle = Math.PI * 2 / sides;
+            let increaseAngle = 0;
+            let lengthX, lengthY, targetX, targetY;
+            coords.push({layer: j, coords: []});
+            for (let i = 0; i < sides; i++) {
+                lengthX = radius * Math.cos(increaseAngle);
+                targetX = x + lengthX;
+                lengthY = radius * Math.sin(increaseAngle);
+                targetY = y - lengthY;
+                ctx.lineTo(targetX, targetY);
+                increaseAngle += averageAngle;
+                coords[j].coords.push({x: targetX, y: targetY});
+            }
+            ctx.closePath();
+            ctx.stroke();
+            radius = radius + step;
+        }
+        drawStria(sides, coords, x, y, options, ctx);
+        drawData(sides, radius, coords, x, y, data, options, ctx);
+    }
+
+    function drawStria(surface, coords, x, y, options, ctx) {
+        let _coords = coords[coords.length - 1].coords;
+        for (let i = 0; i < surface; i++) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(_coords[i].x, _coords[i].y);
+            ctx.closePath();
+            ctx.stroke();
+        }
+    }
+
+    function drawData(surface, radius, coords, x, y, data, options, ctx) {
+        let decidedCoords = [];
+        let maxLayer = coords[coords.length - 1].coords;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.font = `${options.radar.textSize}px Georgia`;
+        ctx.lineWidth = options.dataArea.lineWidth;
+        for (let i = 0; i < surface; i++) {
+            if (maxLayer[i].x <= x) {
+                ctx.textAlign = 'right'
+            } else {
+                ctx.textAlign = 'left'
+            }
+            ctx.fillText(data[i].title, maxLayer[i].x, maxLayer[i].y);
+            let layer = data[i].star - 1;
+            let _x, _y;
+            if (layer < 0) {
+                _x = x;
+                _y = y;
+            } else {
+                _x = coords[layer].coords[i].x;
+                _y = coords[layer].coords[i].y;
+            }
+            if (i === 0) {
+                ctx.moveTo(_x, _y);
+            } else {
+                ctx.lineTo(_x, _y);
+            }
+            decidedCoords.push({title: data[i].title, star: data[i].star, x: _x, y: _y});
+        }
+        ctx.closePath();
+        ctx.strokeStyle = options.dataArea.lineColor;
+        ctx.stroke();
+        ctx.fillStyle = options.dataArea.fillColor;
+        ctx.fill();
+        drawPoint(decidedCoords, ctx);
+        drawMovablePanel(decidedCoords);
+    }
+
+    function drawPoint(coords, ctx) {
+        ctx.strokeStyle = 'white';
+        for (let i = 0; i < coords.length; i++) {
+            ctx.beginPath();
+            ctx.arc(coords[i].x, coords[i].y, 1, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fillStyle = 'white';
+            ctx.fill();
+        }
+    }
+
+    function drawMovablePanel(coords) {
+        let cnp = $("#Canvas-panel");
+        let timeout = null;
+        $("#Canvas").on({
+            mousemove: function (e) {
+                if (timeout != null) clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    coords.forEach((v, i, a) => {
+                        if ((v.x >= e.offsetX - 5 && v.x < e.offsetX + 5) && (v.y >= e.offsetY - 5 && v.y < e.offsetY + 5)) {
+                            $(cnp).css({
+                                'display': 'block',
+                                'left': `${e.offsetX}px`,
+                                'top': `${e.offsetY}px`
+                            });
+                            $(cnp).empty().append(`
+                                <div class="tech">技术：${v.title}</div>
+                                <div class="star">掌握程度：${v.star} 颗星</div>
+                            `);
+                        }
+                    });
+                }, 50);
+            },
+            mouseleave: function (e) {
+                $(cnp).css({'display': 'none'});
+            }
+        });
+    }
+</script>
+</body>
+</html>

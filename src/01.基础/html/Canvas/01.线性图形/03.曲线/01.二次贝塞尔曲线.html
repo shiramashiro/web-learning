@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二次贝塞尔曲线</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    drawGrid(300, 300, 20);
+
+    ctx.beginPath();
+    ctx.moveTo(10, 200);
+    ctx.quadraticCurveTo(60, 80, 200, 200);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#FF0000';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(10, 200, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#7FFFAA';
+    ctx.fillStyle = '#7FFFAA';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(60, 80, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#FFD700';
+    ctx.fillStyle = '#FFD700';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(200, 200, 4, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#6699FF';
+    ctx.fillStyle = '#6699FF';
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = 'black';
+
+    ctx.beginPath();
+    ctx.moveTo(10, 200);
+    ctx.lineTo(60, 80);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(60, 80);
+    ctx.lineTo(200, 200);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P0", 20, 205);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P1", 65, 75);
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black'
+    ctx.fillText("P2", 210, 205);
+</script>
+</body>
+</html>

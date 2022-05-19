@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>01.画圆</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.arc(150, 150, 100, 0, Math.PI * 2, true);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(150, 150, 2, 0, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.fillStyle = 'red';
+    ctx.fill();
+
+    drawGrid(300, 300 ,20);
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03.画路径矩形</title>
+    <style>
+        #canvas {
+            border: 1px solid rgba(110, 110, 110, 0.8);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<script src="../utils/draw_grid.js"></script>
+<script type="text/javascript">
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.moveTo(40, 40);
+    ctx.lineTo(220, 40);
+    ctx.lineTo(220, 220);
+    ctx.lineTo(40, 220);
+    ctx.closePath(); // closePath()，让画笔会到起始位置，即 moveTo 所指的点
+
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = '#e1a32b';
+    ctx.stroke();
+    ctx.fillStyle = '#689bc5';
+    ctx.fill();
+
+    drawGrid(300, 300 ,20);
+</script>
+</body>
+</html>
