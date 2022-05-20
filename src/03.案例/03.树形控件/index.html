@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03.树形控件</title>
+  <link rel="stylesheet" href="./index.css">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+<div id="app">
+</div>
+<script type="text/javascript">
+  function strToBool(str) {
+    return str !== "false";
+  }
+
+  function boolToStr(bool) {
+    return bool === false ? "false" : "true";
+  }
+
+  let treeOcxData = [
+    {
+      tip: "分类",
+      items: [ "设计作品", "技巧杂烩", "生活随笔", "无处安放", "日记新的", "兴趣爱好" ]
+
+    },
+    {
+      tip: "导航",
+      items: [ "固钉", "回到顶部", "面包屑" ]
+    },
+    {
+      tip: "数据展示",
+      items: [ "头像", "徽章", "日历", "卡片", "走马灯" ]
+    },
+    {
+      tip: "只有这一层分级"
+    }
+  ];
+
+  // 渲染节点函数
+  function rendTreeOcx(mount, data) {
+    let template = ``;
+    for ( let i = 0; i < data.length; i++ ) {
+      if ( data[i].items && data[i].items.length > 0 ) {
+        template += `
+          <li class="tree-ocx-li-${ i } enable-cursor" data-displayed="false">
+            <div class="tree-ocx-tip">${ data[i].tip }</div>
+            <ul class="tree-ocx-ul enable-display">
+        `;
+        for ( let j = 0; j < data[i].items.length; j++ ) {
+          template += `
+            <li class="tree-ocx-li-${ i }-${ j }">
+              ${ data[i].items[j] }
+            </li>
+          `;
+        }
+        template += `</ul></li>`;
+      } else {
+        template += `
+          <li class="tree-ocx-li-${ i }">
+            <div class="tree-ocx-tip">${ data[i].tip }</div>
+          </li>
+        `;
+      }
+    }
+    $(mount).append(`<ul class="tree-ocx">${ template }</ul>`);
+
+    $(".enable-cursor").on("click", function () {
+      let displayed = strToBool($(this)[0].dataset.displayed);
+
+      if ( displayed === false ) {
+        $(this).css({
+          "--tip-height": `${ $(this).children(".tree-ocx-tip").height() }px`,
+          "--li-height": `${ $(this).children(".enable-display").height() }px`
+        });
+        $(this).addClass("enable-cursor-active");
+        $(this).children(".enable-display").addClass("enable-display-active");
+      } else {
+        $(this).removeClass("enable-cursor-active");
+        $(this).children(".enable-display").removeClass("enable-display-active");
+      }
+      $(this)[0].dataset.displayed = boolToStr(!displayed);
+    });
+  }
+
+  rendTreeOcx("#app", treeOcxData);
+</script>
+</body>
+</html>
