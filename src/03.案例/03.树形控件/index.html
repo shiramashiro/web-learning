@@ -21,69 +21,99 @@
   let treeOcxData = [
     {
       tip: "分类",
-      items: [ "设计作品", "技巧杂烩", "生活随笔", "无处安放", "日记新的", "兴趣爱好" ]
-
+      child: [
+        {
+          tip: "设计作品",
+          child: [
+            {
+              tip: "作品1"
+            },
+            {
+              tip: "作品2"
+            }
+          ]
+        },
+        {
+          tip: "技巧杂烩",
+          child: [
+            {
+              tip: "Web 前端",
+              child: [ { tip: "Vue.js" }, { tip: "JavaScript" },
+                {
+                  tip: "HTML",
+                  child: [
+                    {
+                      tip: "Canvas",
+                      child: [ { tip: "beginPath()" }, { tip: "closePath()" } ]
+                    },
+                    { tip: "Audio" }
+                  ]
+                }
+              ]
+            },
+            {
+              tip: "Python"
+            },
+            {
+              tip: "Java"
+            }
+          ]
+        },
+        {
+          tip: "生活随笔"
+        },
+        {
+          tip: "兴趣爱好"
+        }
+      ]
     },
     {
       tip: "导航",
-      items: [ "固钉", "回到顶部", "面包屑" ]
+      child: [ { tip: "固钉" }, { tip: "回到顶部" }, { tip: "面包屑" } ]
     },
     {
-      tip: "数据展示",
-      items: [ "头像", "徽章", "日历", "卡片", "走马灯" ]
-    },
-    {
-      tip: "只有这一层分级"
+      tip: "数据展示"
     }
   ];
 
-  // 渲染节点函数
-  function rendTreeOcx(mount, data) {
+  function rendChild(data, enableCursor) {
     let template = ``;
-    for ( let i = 0; i < data.length; i++ ) {
-      if ( data[i].items && data[i].items.length > 0 ) {
-        template += `
-          <li class="tree-ocx-li-${ i } enable-cursor" data-displayed="false">
-            <div class="tree-ocx-tip">${ data[i].tip }</div>
-            <ul class="tree-ocx-ul enable-display">
-        `;
-        for ( let j = 0; j < data[i].items.length; j++ ) {
-          template += `
-            <li class="tree-ocx-li-${ i }-${ j }">
-              ${ data[i].items[j] }
-            </li>
-          `;
-        }
-        template += `</ul></li>`;
-      } else {
-        template += `
-          <li class="tree-ocx-li-${ i }">
-            <div class="tree-ocx-tip">${ data[i].tip }</div>
-          </li>
-        `;
-      }
+    if ( enableCursor ) {
+      template = `<ul class="tree-ocx-ul enable-display">`;
+    } else {
+      template = `<ul class="tree-ocx-ul">`;
     }
-    $(mount).append(`<ul class="tree-ocx">${ template }</ul>`);
-
-    $(".enable-cursor").on("click", function () {
-      let displayed = strToBool($(this)[0].dataset.displayed);
-
-      if ( displayed === false ) {
-        $(this).css({
-          "--tip-height": `${ $(this).children(".tree-ocx-tip").height() }px`,
-          "--li-height": `${ $(this).children(".enable-display").height() }px`
-        });
-        $(this).addClass("enable-cursor-active");
-        $(this).children(".enable-display").addClass("enable-display-active");
+    for ( let i = 0; i < data.length; i++ ) {
+      template += `<li class="enable-cursor" data-displayed="false" onclick="display(this)"><div class="tree-ocx-tip">${ data[i].tip }</div>`;
+      if ( data[i].child ) {
+        template += `${ rendChild(data[i].child, true) }`;
       } else {
-        $(this).removeClass("enable-cursor-active");
-        $(this).children(".enable-display").removeClass("enable-display-active");
+        template += `${ rendChild("", false) }`;
       }
-      $(this)[0].dataset.displayed = boolToStr(!displayed);
-    });
+      template += `</li>`;
+    }
+    template += `</ul>`;
+    return template;
   }
 
-  rendTreeOcx("#app", treeOcxData);
+  $("#app").append(rendChild(treeOcxData));
+
+  function display(e) {
+    let displayed = strToBool($(e)[0].dataset.displayed);
+    if ( displayed === false ) {
+      $(e).css({
+        "--tip-height": `${ $(e).children(".tree-ocx-tip").height() }px`,
+        "--li-height": `${ $(e).children(".enable-display").height() }px`
+      });
+      $(e).addClass("enable-cursor-active");
+      $(e).children(".enable-display").addClass("enable-display-active");
+    } else {
+      $(e).removeClass("enable-cursor-active");
+      $(e).children(".enable-display").removeClass("enable-display-active");
+    }
+    // $(e)[0].dataset.displayed = boolToStr(!displayed);
+  }
+
 </script>
 </body>
 </html>
