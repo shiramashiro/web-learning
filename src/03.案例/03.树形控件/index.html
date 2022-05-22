@@ -84,7 +84,7 @@
       template = `<ul class="tree-ocx-ul">`;
     }
     for ( let i = 0; i < data.length; i++ ) {
-      template += `<li class="enable-cursor" data-displayed="false" onclick="display(this)"><div class="tree-ocx-tip">${ data[i].tip }</div>`;
+      template += `<li class="enable-cursor" data-displayed="false"><div class="tree-ocx-tip">${ data[i].tip }</div>`;
       if ( data[i].child ) {
         template += `${ rendChild(data[i].child, true) }`;
       } else {
@@ -98,22 +98,22 @@
 
   $("#app").append(rendChild(treeOcxData));
 
-  function display(e) {
-    let displayed = strToBool($(e)[0].dataset.displayed);
+  $(".enable-cursor").on("click", function (e) {
+    e.stopPropagation();
+    let displayed = strToBool($(this)[0].dataset.displayed);
     if ( displayed === false ) {
-      $(e).css({
-        "--tip-height": `${ $(e).children(".tree-ocx-tip").height() }px`,
-        "--li-height": `${ $(e).children(".enable-display").height() }px`
+      $(this).css({
+        "--tip-height": `${ $(this).children(".tree-ocx-tip").height() }px`,
+        "--li-height": `${ $(this).children(".enable-display").height() }px`
       });
-      $(e).addClass("enable-cursor-active");
-      $(e).children(".enable-display").addClass("enable-display-active");
+      $(this).addClass("enable-cursor-active");
+      $(this).children(".enable-display").addClass("enable-display-active");
     } else {
-      $(e).removeClass("enable-cursor-active");
-      $(e).children(".enable-display").removeClass("enable-display-active");
+      $(this).removeClass("enable-cursor-active");
+      $(this).children(".enable-display").removeClass("enable-display-active");
     }
-    // $(e)[0].dataset.displayed = boolToStr(!displayed);
-  }
-
+    $(this)[0].dataset.displayed = boolToStr(!displayed);
+  });
 </script>
 </body>
 </html>
