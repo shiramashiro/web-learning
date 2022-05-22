@@ -3,28 +3,32 @@ let treeOcxData = [
     tip: "分类",
     child: [
       {
-        tip: "设计作品",
-        child: [
-          {
-            tip: "作品1"
-          },
-          {
-            tip: "作品2"
-          }
-        ]
+        tip: "设计作品"
       },
       {
         tip: "技巧杂烩",
         child: [
           {
             tip: "Web 前端",
-            child: [ { tip: "Vue.js" }, { tip: "JavaScript" },
+            child: [
+              {
+                tip: "Vue.js",
+                child: [
+                  { tip: "组件" },
+                  { tip: "指令" }
+                ]
+              },
+              { tip: "JavaScript" },
+              { tip: "React.js" },
               {
                 tip: "HTML",
                 child: [
                   {
                     tip: "Canvas",
-                    child: [ { tip: "beginPath()" }, { tip: "closePath()" } ]
+                    child: [
+                      { tip: "beginPath()" },
+                      { tip: "closePath()" }
+                    ]
                   },
                   { tip: "Audio" }
                 ]

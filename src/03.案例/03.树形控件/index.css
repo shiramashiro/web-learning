@@ -5,14 +5,38 @@
   user-select: none;
 }
 
-/*ul {*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*}*/
+ul {
+  margin: 0;
+  padding: 0 0 0 10px;
+}
 
-/*li {*/
-/*  list-style: none;*/
-/*}*/
+li {
+  list-style: none;
+}
+
+.tree-ocx-tip {
+  padding: 8px 4px;
+}
+
+.tree-ocx-tip:hover {
+  transition: .5s;
+  background-color: rgba(234, 234, 234, 0.7);
+}
+
+.fold-icon, .unfold-icon {
+  margin-right: 8px;
+}
+
+.tree-ocx-tip-wrap {
+  display: flex;
+  justify-content: start;
+  align-content: center;
+  align-items: center;
+}
+
+.tree-ocx-tip-normal {
+  padding-left: 26px;
+}
 
 .tree-ocx-li {
   --tree-ocx-li-height: 0;
@@ -28,7 +52,7 @@
 }
 
 .tree-ocx-li-enable-fold-active {
-  animation: tree-ocx-li-fold-animation 0.5s ease-in-out 0s;
+  animation: tree-ocx-li-fold-animation .5s ease-in-out 0s;
 }
 
 .tree-ocx-ul-enable-fold-active {

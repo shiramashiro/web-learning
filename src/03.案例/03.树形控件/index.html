@@ -8,11 +8,13 @@
 </head>
 <body>
 <div id="app">
+  <div class="tree-ocx">
+  </div>
 </div>
 <script src="./main.js"></script>
 <script src="./data.js"></script>
 <script type="text/javascript">
-  $("#app").append(rendTreeOcx(treeOcxData));
+  $("#app > .tree-ocx").append(rendTreeOcx(treeOcxData));
   foldOrUnFoldTree();
 </script>
 </body>
