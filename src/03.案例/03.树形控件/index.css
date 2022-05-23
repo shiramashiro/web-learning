@@ -55,6 +55,30 @@ li {
   animation: tree-ocx-li-fold-animation .5s ease-in-out 0s;
 }
 
+@keyframes tree-ocx-li-fold-animation {
+  from {
+    height: var(--tree-ocx-tip-height);
+  }
+
+  to {
+    height: calc(var(--tree-ocx-li-height) + var(--tree-ocx-tip-height));
+  }
+}
+
+.tree-ocx-li-unfold-active {
+  animation: tree-ocx-li-unfold-animation .5s ease-in-out 0s;
+}
+
+@keyframes tree-ocx-li-unfold-animation {
+  from {
+    height: calc(var(--tree-ocx-li-height) + var(--tree-ocx-tip-height));
+  }
+
+  to {
+    height: var(--tree-ocx-tip-height);
+  }
+}
+
 .tree-ocx-ul-enable-fold-active {
   display: block;
   animation: tree-ocx-ul-fold-animation 1s ease-in-out 0s;
@@ -70,12 +94,16 @@ li {
   }
 }
 
-@keyframes tree-ocx-li-fold-animation {
+.tree-ocx-ul-unfold-active {
+  animation: tree-ocx-ul-unfold-animation 1s ease-in-out 0s;
+}
+
+@keyframes tree-ocx-ul-unfold-animation {
   from {
-    height: var(--tree-ocx-tip-height);
+    opacity: 1;
   }
 
   to {
-    height: calc(var(--tree-ocx-li-height) + var(--tree-ocx-tip-height));
+    opacity: 0;
   }
 }

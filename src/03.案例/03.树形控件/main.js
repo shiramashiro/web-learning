@@ -52,13 +52,17 @@ function foldOrUnFoldTree() {
       });
       $(this).children(".tree-ocx-tip").children(".tree-ocx-tip-wrap").children(".unfold-icon").remove();
       $(this).children(".tree-ocx-tip").children(".tree-ocx-tip-wrap").prepend(foldIcon);
+      $(this).removeClass("tree-ocx-li-unfold-active");
       $(this).addClass("tree-ocx-li-enable-fold-active");
       $(this).children(".tree-ocx-ul-enable-fold").addClass("tree-ocx-ul-enable-fold-active");
+      $(this).children(".tree-ocx-ul-enable-fold").removeClass("tree-ocx-ul-unfold-active");
     } else {
       $(this).children(".tree-ocx-tip").children(".tree-ocx-tip-wrap").children(".fold-icon").remove();
       $(this).children(".tree-ocx-tip").children(".tree-ocx-tip-wrap").prepend(unfoldIcon);
+      $(this).addClass("tree-ocx-li-unfold-active");
       $(this).removeClass("tree-ocx-li-enable-fold-active");
       $(this).children(".tree-ocx-ul-enable-fold").removeClass("tree-ocx-ul-enable-fold-active");
+      $(this).children(".tree-ocx-ul-enable-fold").addClass("tree-ocx-ul-unfold-active");
     }
     $(this)[0].dataset.isFolded = boolToStr(!isFolded);
   });
