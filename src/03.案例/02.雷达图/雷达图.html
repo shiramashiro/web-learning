@@ -84,48 +84,59 @@
 
   drawRadarMap(5, 40, 10, 300, 300, data, options, ctx);
 
-  // 绘制雷达图
-  function drawRadarMap(layer, step, sides, x, y, data, options, ctx) {
-    let coordinates = [];
-    let radius = step;
+  /**
+   * 绘制雷达图
+   *
+   * @param radarLayers 雷达图最大层数
+   * @param polygonPerStep 多边形之间的间距
+   * @param radarMapTotalSides 雷达图最大边数
+   * @param radarX 雷达图中心点坐标的 x 坐标轴
+   * @param radarY 雷达图中心点坐标的 y 坐标轴
+   * @param data 数据区数据
+   * @param options 配置参数
+   * @param ctx 画布上下文
+   */
+  function drawRadarMap(radarLayers, polygonPerStep, radarMapTotalSides, radarX, radarY, data, options, ctx) {
+    let axis = [];
+    let radius = polygonPerStep;
 
     ctx.strokeStyle = options.radar.lineColor;
     ctx.lineWidth = options.radar.lineWidth;
 
-    for ( let j = 0; j < layer; j++ ) {
-      drawPolygon(sides, radius, x, y, coordinates, j, ctx);
-      radius = radius + step;
+    for ( let j = 0; j < radarLayers; j++ ) {
+      drawPolygon(radarMapTotalSides, radius, radarX, radarY, axis, j, ctx);
+      radius = radius + polygonPerStep;
     }
 
-    drawStria(sides, coordinates, x, y, options, ctx);
-    drawDataArea(sides, radius, coordinates, x, y, data, options, ctx);
+    drawStria(radarMapTotalSides, axis, radarX, radarY, options, ctx);
+    drawDataArea(radarMapTotalSides, axis, radarX, radarY, data, options, ctx);
   }
 
   // 计算多边形点的x轴坐标
-  function calcPolygonX(x, radius, increaseAngle) {
-    return x + radius * Math.cos(increaseAngle);
+  function calcPolygonX(radarX, radius, increaseAngle) {
+    return radarX + radius * Math.cos(increaseAngle);
   }
 
   // 计算多边形点的y轴坐标
-  function calcPolygonY(y, radius, increaseAngle) {
-    return y - radius * Math.sin(increaseAngle);
+  function calcPolygonY(radarY, radius, increaseAngle) {
+    return radarY - radius * Math.sin(increaseAngle);
   }
 
   // 绘制多边形
-  function drawPolygon(sides, radius, x, y, coordinates, j, ctx) {
-    let averageAngle = Math.PI * 2 / sides;
+  function drawPolygon(radarMapTotalSides, radius, radarX, radarY, axis, currentPolygonLayer, ctx) {
+    let averageAngle = Math.PI * 2 / radarMapTotalSides;
     let increaseAngle = 0;
     let targetX, targetY;
 
     ctx.beginPath();
-    coordinates.push({ layer: j, coords: [] });
+    axis.push({ layer: currentPolygonLayer, coords: [] });
 
-    for ( let i = 0; i < sides; i++ ) {
-      targetX = calcPolygonX(x, radius, increaseAngle);
-      targetY = calcPolygonY(y, radius, increaseAngle);
+    for ( let i = 0; i < radarMapTotalSides; i++ ) {
+      targetX = calcPolygonX(radarX, radius, increaseAngle);
+      targetY = calcPolygonY(radarY, radius, increaseAngle);
       ctx.lineTo(targetX, targetY);
       increaseAngle += averageAngle;
-      coordinates[j].coords.push({ x: targetX, y: targetY });
+      axis[currentPolygonLayer].coords.push({ x: targetX, y: targetY });
     }
 
     ctx.closePath();
@@ -133,37 +144,41 @@
   }
 
   // 绘制多边形圆心到最外层多边形的直线
-  function drawStria(surface, coordinates, originX, originY, options, ctx) {
-    let length = coordinates.length;
-    let coords = coordinates[length - 1].coords;
-    for ( let i = 0; i < surface; i++ ) {
+  function drawStria(radarLayers, axis, radarX, radarY, options, ctx) {
+    let coords = axis[axis.length - 1].coords;
+    for ( let i = 0; i < radarLayers; i++ ) {
       ctx.beginPath();
-      ctx.moveTo(originX, originY);
+      ctx.moveTo(radarX, radarY);
       ctx.lineTo(coords[i].x, coords[i].y);
       ctx.closePath();
       ctx.stroke();
-      drawPointText(options, coords, i, originX, ctx);
+      drawPointText(options, coords, i, radarX, ctx);
     }
   }
 
   // 绘制多边形做外层点的文本
-  function drawPointText(options, coords, i, originX, ctx) {
+  function drawPointText(options, axis, currentPoint, radarX, ctx) {
     ctx.font = `${ options.radar.textSize }px Georgia`;
     ctx.lineWidth = options.dataArea.lineWidth;
-    if ( coords[i].x <= originX ) {
+    if ( axis[currentPoint].x <= radarX ) {
       ctx.textAlign = "right";
     } else {
       ctx.textAlign = "left";
     }
-    ctx.fillText(data[i].title, coords[i].x, coords[i].y);
+    ctx.fillText(data[currentPoint].title, axis[currentPoint].x, axis[currentPoint].y);
   }
 
-  // 绘制数据区域点
-  function drawDataAreaPoint(coordinates, ctx) {
+  /**
+   * 绘制数据区域的点，是一个样式，白色的点，突出数据区的点
+   *
+   * @param axis 顺时针开始最外层每一个点的文本
+   * @param ctx 画布上下文
+   */
+  function drawDataAreaPoint(axis, ctx) {
     ctx.strokeStyle = "white";
-    for ( let i = 0; i < coordinates.length; i++ ) {
+    for ( let i = 0; i < axis.length; i++ ) {
       ctx.beginPath();
-      ctx.arc(coordinates[i].x, coordinates[i].y, 1, 0, Math.PI * 2);
+      ctx.arc(axis[i].x, axis[i].y, 1, 0, Math.PI * 2);
       ctx.closePath();
       ctx.stroke();
       ctx.fillStyle = "white";
@@ -171,40 +186,85 @@
     }
   }
 
-  // 绘制数据区域顶点
-  function drawDataAreaTop(coordinates, i, originX, originY) {
-    let layer = data[i].star - 1;
-    let x, y;
-    if ( layer < 0 ) {
-      x = originX;
-      y = originY;
+  /**
+   * 计算数据区域的点的 x 坐标
+   *
+   * @param areaTopLayer 数据区域的点的所在层数
+   * @param axis 顺时针开始最外层每一个点的文本
+   * @param radarX 雷达图中心点坐标的 x 坐标轴
+   * @param currentPoint 当前循环到的多边形的一个点坐标
+   * @returns {*} 返回 x 坐标
+   */
+  function calcDataAreaTopX(areaTopLayer, axis, radarX, currentPoint) {
+    if ( areaTopLayer < 0 ) {
+      return radarX;
     } else {
-      x = coordinates[layer].coords[i].x;
-      y = coordinates[layer].coords[i].y;
+      return axis[areaTopLayer].coords[currentPoint].x;
+    }
+  }
+
+  /**
+   * 计算数据区域的点的 y 坐标
+   *
+   * @param areaTopLayer 数据区域的点的所在层数
+   * @param axis 顺时针开始最外层每一个点的文本
+   * @param radarY 雷达图中心点坐标的 y 坐标轴
+   * @param currentPoint 当前循环到的多边形的一个点坐标
+   * @returns {*} 返回 y 坐标
+   */
+  function calcDataAreaTopY(areaTopLayer, axis, radarY, currentPoint) {
+    if ( areaTopLayer < 0 ) {
+      return radarY;
+    } else {
+      return axis[areaTopLayer].coords[currentPoint].y;
+    }
+  }
+
+  /**
+   * 确定数据区域顶点，圈画数据区域以及填充数据区域的颜色
+   *
+   * @param axis 顺时针开始最外层每一个点的文本
+   * @param currentPoint 当前循环到的多边形的一个点坐标
+   * @param radarX 雷达图中心点坐标的 x 坐标轴
+   * @param radarY 雷达图中心点坐标的 y 坐标轴
+   * @param ctx 画布上下文
+   * @returns {{x: (*), y: (*)}} 返回当前多边形的点坐标中对应的直线上，数据区域的值
+   */
+  function drawDataAreaTop(axis, currentPoint, radarX, radarY, ctx) {
+    let x = calcDataAreaTopX(data[currentPoint].star - 1, axis, radarX, currentPoint);
+    let y = calcDataAreaTopY(data[currentPoint].star - 1, axis, radarY, currentPoint);
+    if ( currentPoint === 0 ) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
     }
     return { x: x, y: y };
   }
 
-  // 绘制数据矛
-  function drawDataArea(surface, radius, coordinates, originX, originY, data, options, ctx) {
-    let decidedCoords = [];
-    let lastLayer = coordinates[coordinates.length - 1].coords;
+  /**
+   * 绘制数据区域
+   *
+   * @param radarMapTotalSides 雷达图总共边数
+   * @param axis 顺时针开始最外层每一个点的文本
+   * @param radarX 雷达图中心点坐标的 x 坐标轴
+   * @param radarY 雷达图中心点坐标的 y 坐标轴
+   * @param data 数据区域数据
+   * @param options 选项参数
+   * @param ctx 画布上下文
+   */
+  function drawDataArea(radarMapTotalSides, axis, radarX, radarY, data, options, ctx) {
+    let areaTopAxis = [];
     ctx.beginPath();
-    for ( let i = 0; i < surface; i++ ) {
-      let { x, y } = drawDataAreaTop(coordinates, i, originX, originY);
-      if ( i === 0 ) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-      decidedCoords.push({ x: x, y: y });
+    for ( let i = 0; i < radarMapTotalSides; i++ ) {
+      let { x, y } = drawDataAreaTop(axis, i, radarX, radarY, ctx);
+      areaTopAxis.push({ x: x, y: y });
     }
     ctx.closePath();
     ctx.strokeStyle = options.dataArea.lineColor;
     ctx.stroke();
     ctx.fillStyle = options.dataArea.fillColor;
     ctx.fill();
-    drawDataAreaPoint(decidedCoords, ctx);
+    drawDataAreaPoint(areaTopAxis, ctx);
   }
 </script>
 </body>
