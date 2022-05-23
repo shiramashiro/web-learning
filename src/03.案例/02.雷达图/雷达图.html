@@ -76,42 +76,63 @@
       textSize: 16
     },
     dataArea: {
-      lineWidth: 2,
+      lineWidth: 1,
       lineColor: "rgba(68,226,155, 1)",
       fillColor: "rgba(81,182,137, 0.6)"
     }
   };
 
-  drawPolygonPath(5, 40, 10, 300, 300, data, options, ctx);
+  drawRadarMap(5, 40, 10, 300, 300, data, options, ctx);
 
-  function drawPolygonPath(layer, step, sides, x, y, data, options, ctx) {
+  // 绘制雷达图
+  function drawRadarMap(layer, step, sides, x, y, data, options, ctx) {
     let coordinates = [];
     let radius = step;
+
     ctx.strokeStyle = options.radar.lineColor;
     ctx.lineWidth = options.radar.lineWidth;
+
     for ( let j = 0; j < layer; j++ ) {
-      ctx.beginPath();
-      let averageAngle = Math.PI * 2 / sides;
-      let increaseAngle = 0;
-      let lengthX, lengthY, targetX, targetY;
-      coordinates.push({ layer: j, coords: [] });
-      for ( let i = 0; i < sides; i++ ) {
-        lengthX = radius * Math.cos(increaseAngle);
-        targetX = x + lengthX;
-        lengthY = radius * Math.sin(increaseAngle);
-        targetY = y - lengthY;
-        ctx.lineTo(targetX, targetY);
-        increaseAngle += averageAngle;
-        coordinates[j].coords.push({ x: targetX, y: targetY });
-      }
-      ctx.closePath();
-      ctx.stroke();
+      drawPolygon(sides, radius, x, y, coordinates, j, ctx);
       radius = radius + step;
     }
+
     drawStria(sides, coordinates, x, y, options, ctx);
-    drawData(sides, radius, coordinates, x, y, data, options, ctx);
+    drawDataArea(sides, radius, coordinates, x, y, data, options, ctx);
   }
 
+  // 计算多边形点的x轴坐标
+  function calcPolygonX(x, radius, increaseAngle) {
+    return x + radius * Math.cos(increaseAngle);
+  }
+
+  // 计算多边形点的y轴坐标
+  function calcPolygonY(y, radius, increaseAngle) {
+    return y - radius * Math.sin(increaseAngle);
+  }
+
+  // 绘制多边形
+  function drawPolygon(sides, radius, x, y, coordinates, j, ctx) {
+    let averageAngle = Math.PI * 2 / sides;
+    let increaseAngle = 0;
+    let targetX, targetY;
+
+    ctx.beginPath();
+    coordinates.push({ layer: j, coords: [] });
+
+    for ( let i = 0; i < sides; i++ ) {
+      targetX = calcPolygonX(x, radius, increaseAngle);
+      targetY = calcPolygonY(y, radius, increaseAngle);
+      ctx.lineTo(targetX, targetY);
+      increaseAngle += averageAngle;
+      coordinates[j].coords.push({ x: targetX, y: targetY });
+    }
+
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // 绘制多边形圆心到最外层多边形的直线
   function drawStria(surface, coordinates, originX, originY, options, ctx) {
     let length = coordinates.length;
     let coords = coordinates[length - 1].coords;
@@ -121,33 +142,56 @@
       ctx.lineTo(coords[i].x, coords[i].y);
       ctx.closePath();
       ctx.stroke();
+      drawPointText(options, coords, i, originX, ctx);
     }
   }
 
-  function drawData(surface, radius, coordinates, originX, originY, data, options, ctx) {
-    let decidedCoords = [];
-    let length = coordinates.length;
-    let lastLayer = coordinates[length - 1].coords;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
+  // 绘制多边形做外层点的文本
+  function drawPointText(options, coords, i, originX, ctx) {
     ctx.font = `${ options.radar.textSize }px Georgia`;
     ctx.lineWidth = options.dataArea.lineWidth;
+    if ( coords[i].x <= originX ) {
+      ctx.textAlign = "right";
+    } else {
+      ctx.textAlign = "left";
+    }
+    ctx.fillText(data[i].title, coords[i].x, coords[i].y);
+  }
+
+  // 绘制数据区域点
+  function drawDataAreaPoint(coordinates, ctx) {
+    ctx.strokeStyle = "white";
+    for ( let i = 0; i < coordinates.length; i++ ) {
+      ctx.beginPath();
+      ctx.arc(coordinates[i].x, coordinates[i].y, 1, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = "white";
+      ctx.fill();
+    }
+  }
+
+  // 绘制数据区域顶点
+  function drawDataAreaTop(coordinates, i, originX, originY) {
+    let layer = data[i].star - 1;
+    let x, y;
+    if ( layer < 0 ) {
+      x = originX;
+      y = originY;
+    } else {
+      x = coordinates[layer].coords[i].x;
+      y = coordinates[layer].coords[i].y;
+    }
+    return { x: x, y: y };
+  }
+
+  // 绘制数据矛
+  function drawDataArea(surface, radius, coordinates, originX, originY, data, options, ctx) {
+    let decidedCoords = [];
+    let lastLayer = coordinates[coordinates.length - 1].coords;
+    ctx.beginPath();
     for ( let i = 0; i < surface; i++ ) {
-      if ( lastLayer[i].x <= originX ) {
-        ctx.textAlign = "right";
-      } else {
-        ctx.textAlign = "left";
-      }
-      ctx.fillText(data[i].title, lastLayer[i].x, lastLayer[i].y);
-      let layer = data[i].star - 1;
-      let x, y;
-      if ( layer < 0 ) {
-        x = originX;
-        y = originY;
-      } else {
-        x = coordinates[layer].coords[i].x;
-        y = coordinates[layer].coords[i].y;
-      }
+      let { x, y } = drawDataAreaTop(coordinates, i, originX, originY);
       if ( i === 0 ) {
         ctx.moveTo(x, y);
       } else {
@@ -160,19 +204,7 @@
     ctx.stroke();
     ctx.fillStyle = options.dataArea.fillColor;
     ctx.fill();
-    drawPoint(decidedCoords, ctx);
-  }
-
-  function drawPoint(coordinates, ctx) {
-    ctx.strokeStyle = "white";
-    for ( let i = 0; i < coordinates.length; i++ ) {
-      ctx.beginPath();
-      ctx.arc(coordinates[i].x, coordinates[i].y, 1, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.fillStyle = "white";
-      ctx.fill();
-    }
+    drawDataAreaPoint(decidedCoords, ctx);
   }
 </script>
 </body>
