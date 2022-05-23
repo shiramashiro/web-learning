@@ -22,7 +22,7 @@ class RadarMap {
     }
 
     this.drawStria(axis);
-    this.drawDataArea(axis);
+    return this.drawDataArea(axis);
   };
 
   // 计算多边形点的x轴坐标
@@ -173,7 +173,7 @@ class RadarMap {
     this.ctx.beginPath();
     for ( let i = 0; i < this.radar.radarMapTotalSides; i++ ) {
       let { x, y } = this.drawDataAreaTop(axis, i);
-      areaTopAxis.push({ x: x, y: y });
+      areaTopAxis.push({ title: this.dataArea[i].title, star: this.dataArea[i].star, x: x, y: y });
     }
     this.ctx.closePath();
     this.ctx.strokeStyle = this.config.dataArea.lineColor;
@@ -184,36 +184,31 @@ class RadarMap {
     return areaTopAxis;
   }
 
-  calcDataAreaTopMoveRegion(event, value) {
-    return (value.x >= event.offsetX - 5 && value.x < event.offsetX + 5) && (value.y >= event.offsetY - 5 && value.y < event.offsetY + 5);
-  }
-
-  //
-  // drawFloatingPanel(axis) {
-  //   let floatingPanel = $("#floating-panel");
-  //   let timeout = null;
-  //   $("#radar-map").on({
-  //     mousemove: function (e) {
-  //       if ( timeout != null ) clearTimeout(timeout);
-  //       timeout = setTimeout(() => {
-  //         axis.forEach((value, index) => {
-  //           if ( calcDataAreaTopMoveRegion(e, value) ) {
-  //             $(floatingPanel).css({
-  //               "display": "block",
-  //               "left": `${ e.offsetX }px`,
-  //               "top": `${ e.offsetY }px`
-  //             });
-  //             $(floatingPanel).empty().append(`
-  //               <div class="tech">技术：${ value.title }</div>
-  //               <div class="star">掌握程度：${ value.star } 颗星</div>
-  //             `);
-  //           }
-  //         });
-  //       }, 50);
-  //     },
-  //     mouseleave: function (e) {
-  //       $(floatingPanel).css({ "display": "none" });
-  //     }
-  //   });
-  // };
+  drawFloatingPanel(axis) {
+    let floatingPanel = $("#floating-panel");
+    let timeout = null;
+    $("#radar-map").on({
+      mousemove: function (e) {
+        if ( timeout != null ) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          axis.forEach((value, index) => {
+            if ( (value.x >= e.offsetX - 5 && value.x < e.offsetX + 5) && (value.y >= e.offsetY - 5 && value.y < e.offsetY + 5) ) {
+              $(floatingPanel).css({
+                "display": "block",
+                "left": `${ e.offsetX }px`,
+                "top": `${ e.offsetY }px`
+              });
+              $(floatingPanel).empty().append(`
+                <div class="tech">技术：${ value.title }</div>
+                <div class="star">掌握程度：${ value.star } 颗星</div>
+              `);
+            }
+          });
+        }, 50);
+      },
+      mouseleave: function (e) {
+        $(floatingPanel).css({ "display": "none" });
+      }
+    });
+  };
 }

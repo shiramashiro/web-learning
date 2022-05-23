@@ -3,21 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>雷达图</title>
-  <style>
-    #radar-map {
-      border: 1px solid rgba(110, 110, 110, 0.8);
-      border-radius: 10px;
-    }
-
-    #radar-wrap {
-      display: flex;
-      justify-content: center;
-    }
-  </style>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
 <div id="radar-wrap">
   <canvas id="radar-map" width="600" height="600">Your browser version is too late.</canvas>
+  <div id="floating-panel">
+  </div>
 </div>
 <script src="./utils/canvas_grid.js"></script>
 <script src="./js/main.js"></script>
@@ -27,7 +20,7 @@
   let ctx = canvas.getContext("2d");
   drawGrid(600, 600, 50);
 
-  new RadarMap(
+  let r = new RadarMap(
         ctx,
         {
           radarLayers: 5,
@@ -50,8 +43,10 @@
             fillColor: "rgba(81,182,137, 0.6)"
           }
         }
-  ).drawRadarMap();
+  );
 
+  let axis = r.drawRadarMap();
+  r.drawFloatingPanel(axis, "radar-map");
 </script>
 </body>
 </html>
