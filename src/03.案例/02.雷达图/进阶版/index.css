@@ -1,18 +1,18 @@
-#canvas {
+#radar-map {
     cursor: pointer;
     position: absolute;
     border: 1px solid rgba(110, 110, 110, 0.8);
     border-radius: 10px;
 }
 
-#canvas-container {
+#radar-wrap {
     width: 400px;
     height: 400px;
     box-sizing: border-box;
     position: relative;
 }
 
-#canvas-panel {
+#floating-panel {
     position: absolute;
     display: none;
     border-style: solid;

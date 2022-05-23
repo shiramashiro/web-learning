@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <title>beginPath 和 closePath 函数</title>
     <style>
-        #canvas {
+        #radar-map {
             border: 1px solid rgba(110, 110, 110, 0.8);
             border-radius: 10px;
         }
     </style>
 </head>
 <body>
-<canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+<canvas id="radar-map" width="300" height="300">Your browser version is too late.</canvas>
 <script src="../utils/draw_grid.js"></script>
 <script type="text/javascript">
-    let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('radar-map');
     let ctx = canvas.getContext('2d');
     drawGrid(300, 300, 20);
 

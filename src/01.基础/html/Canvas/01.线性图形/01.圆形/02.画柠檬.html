@@ -11,12 +11,12 @@
             text-align: center;
         }
 
-        #canvas-container {
+        #radar-wrap {
             display: flex;
             justify-content: center;
         }
 
-        #canvas {
+        #radar-map {
             border: 1px solid rgba(110, 110, 110, 0.8);
             border-radius: 10px;
         }
@@ -24,8 +24,8 @@
 </head>
 <body>
 <div id="app">
-    <div id="canvas-container">
-        <canvas id="canvas" width="300" height="300">Your browser version is too late.</canvas>
+    <div id="radar-wrap">
+        <canvas id="radar-map" width="300" height="300">Your browser version is too late.</canvas>
     </div>
     <input v-model="num" v-on:input="onInput" type="number" placeholder="请输入条数"/>
 </div>
@@ -94,7 +94,7 @@
             }
         },
         mounted() {
-            this.canvas = document.getElementById('canvas');
+            this.canvas = document.getElementById('radar-map');
             this.ctx = this.canvas.getContext('2d');
             this.drawArc();
             this.drawHalfArcLine(this.arcX, this.num, this.radius);
