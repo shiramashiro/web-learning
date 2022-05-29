@@ -24,7 +24,7 @@ let treeOcxData = [
                 tip: "HTML",
                 child: [
                   {
-                    tip: "Canvas",
+                    tip: "canvas",
                     child: [
                       { tip: "beginPath()" },
                       { tip: "closePath()" }

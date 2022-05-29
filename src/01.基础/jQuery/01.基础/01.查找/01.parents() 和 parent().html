@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>01.parents() 和 parent()</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="parent-1">
+      <span>A</span>
+    </div>
+    <div class="parent-2">
+      <span>B</span>
+    </div>
+    <div class="parent-3">
+      <span>C</span>
+    </div>
+  </div>
+  <script>
+    let parents = $("span").parents(".container");
+    console.log(parents);
+
+    let parent = $("span").parent();
+    console.log(parent);
+  </script>
+</body>
+</html>
