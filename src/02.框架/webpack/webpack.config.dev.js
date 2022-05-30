@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Webpack Learning',
-      template: "./public/index.html",
+      template: "./public/01.属性选择器.html",
       hash: true
     })
   ]

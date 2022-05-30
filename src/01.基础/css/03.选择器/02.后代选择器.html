@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02.后代选择器</title>
+  <style>
+    div > div {
+      margin-left: 20px;
+    }
+
+    #app > div {
+      border: 4px solid #00B7FF;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div>items-1
+      <div>item-1-1</div>
+      <div>item-1-2
+        <div>items-1-2-1</div>
+        <div>items-1-2-2</div>
+      </div>
+    </div>
+    <div>items-2</div>
+  </div>
+</body>
+</html>
