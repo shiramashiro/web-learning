@@ -5,7 +5,7 @@
   <title>02.鼠标悬停下拉框</title>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <style>
-    .dropdown-list {
+    .dropdown-group {
       cursor: pointer;
       height: 40px;
       width: 220px;
@@ -35,16 +35,16 @@
       display: none;
       width: 100%;
       padding: 5px;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      overflow-y: hidden;
       box-sizing: border-box;
       background-color: #00B7FF;
     }
 
     .dropdown:hover .items {
       display: block;
-      overflow-y: hidden;
-      position: absolute;
-      top: 40px;
-      left: 0;
     }
 
     .show-items {
@@ -66,41 +66,27 @@
   </style>
 </head>
 <body>
-  <div class="dropdown-list">
+  <div class="dropdown-group">
     <div class="dropdown">
       <div class="label">菜单1</div>
       <div class="items">
-        <div class="item-wrap">
-          <div class="item">菜单1-1</div>
-        </div>
+        <div class="item">菜单1-1</div>
       </div>
     </div>
     <div class="dropdown">
       <div class="label">菜单2</div>
       <div class="items">
-        <div class="item-wrap">
-          <div class="item">菜单2-1</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item">菜单2-2</div>
-        </div>
+        <div class="item">菜单2-1</div>
+        <div class="item">菜单2-2</div>
       </div>
     </div>
     <div class="dropdown">
       <div class="label">菜单4</div>
       <div class="items">
-        <div class="item-wrap">
-          <div class="item">菜单4-1</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item">菜单4-2</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item">菜单4-3</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item">菜单4-4</div>
-        </div>
+        <div class="item">菜单4-1</div>
+        <div class="item">菜单4-2</div>
+        <div class="item">菜单4-3</div>
+        <div class="item">菜单4-4</div>
       </div>
     </div>
   </div>
