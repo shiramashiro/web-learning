@@ -1,12 +1,11 @@
 # 项目说明
 
-零散的技术以及技术的框架都能够融汇成一个完整的 Web 体系。学好 JavaScript 才是学习 Vue.js、React.js、Angular.js 等 MVVM 框架的前提。
+本项目是记录自己学习 Web 前端的笔记库。再通过所学基础知识，实现一些案例等。主要包括内容有 Web 前端三件套，以及衍生技术 Less、Sass、TS 等。以及 Web 前端的三个前沿框架 Vue.js、React.js、Angular.js。
 
-因此，本项目是用于本人学习 JavaScript、HTML、CSS 的 Web 前端基础技术.之后，再学习用于解决 Web 前端问题的
-Vue.js、React.js、Angular.js 的 MVVM 框架。
+本笔记库的目的是将本就零散的 Web 前端技术融合成一个有条理的知识网络。仅供学习和参考！
 
 # 项目结构
 
-1. src/examples 是本人以自己的思路开发的组件库、案例。
-2. src/foundation 是记录学习 Web 前端基础的代码。
-3. src/framework 是记录学习 Web 前端框架的代码。
+1. src/01.基础：是学习 Web 前端基础的代码，包括 JQ、TS、Canvas 等基础知识。
+2. src/02.框架：是学习 Web 前端框架的代码，包括 Vue、React、Angular 等前言知识。
+3. src/03.案例：结合所学基础知识，实现网页的组件（控件）。
