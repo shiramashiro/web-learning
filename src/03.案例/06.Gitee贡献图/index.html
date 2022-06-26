@@ -3,7 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>贡献图</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 </head>
+<style>
+  #contribution-chart {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  #contribution-chart .left-side,
+  #contribution-chart .right-side {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #contribution-chart .left-side {
+    width: 10%;
+  }
+
+  #contribution-chart .right-side {
+    width: 90%;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+
+  .right-side .diamonds {
+    width: var(--diamonds-size);
+    height: var(--diamonds-size);
+    border: 1px solid #FFF;
+    box-sizing: border-box;
+    background-color: #EEEEEE;
+  }
+</style>
 <body>
   <!--1. 每个月有多少个点-->
   <!--2. 竖坐标是周，横坐标是月-->
@@ -11,6 +45,72 @@
   <!--4. 根据这个月的贡献数据渲染一个点的颜色-->
   <!--5. 一个点悬浮之后可以展示详细信息-->
   <!--6. 点击一个点下方显示具体的时间线-->
-  <script></script>
+  <div id="contribution-chart">
+    <div class="left-side">
+      <div class="week">周一</div>
+      <div class="week">周四</div>
+      <div class="week">周日</div>
+    </div>
+    <div class="right-side" data-diamonds-size="0">
+
+    </div>
+  </div>
+  <script>
+    let date = new Date();
+    let nowYear = date.getFullYear();
+    let nowMonth = date.getMonth() + 1;
+    let nowDay = date.getDate();
+    let nowWeek = date.getDay();
+    let nowMonthDays = new Date(nowYear, nowMonth, 0).getDate();
+
+    // 这个月第一天星期几
+    function firstDayOfWeek() {
+      let date = new Date();
+      date.setDate(1);
+      return date.getDay();
+    }
+
+    function drawContributionPoint(contributionNum) {
+      let $rightSide = $("#contribution-chart .right-side");
+      let size = $rightSide.height() / 7;
+      $rightSide.css({ "--diamonds-size": `${ size }px` });
+      $rightSide.append(`<div class="diamonds"></div>`);
+    }
+
+    function calcContributionPointCount() {
+      let date = new Date();
+      let nowYear = date.getFullYear();
+      let nowMonth = date.getMonth() + 1;
+      let remainingMonth = 12 - nowMonth;
+      // 当前月减去12月，如果不等于0就说明还得要去年的月份，假如是 6 月份，那么就要去年的 6 月份。
+      // 也就是说今年的1~6月份，以及去年的6~12月份。
+      let monthCount = 0;
+      if ( remainingMonth !== 0 ) {
+        let lastYear = nowYear - 1;
+        for ( let lastYearMonth = remainingMonth + 1; lastYearMonth <= 12; lastYearMonth++ ) {
+          monthCount += calcNowMonthDays(lastYear, lastYearMonth);
+        }
+        for ( let nowYearMonth = nowMonth; nowYearMonth > 0; nowYearMonth-- ) {
+          monthCount += calcNowMonthDays(nowYear, nowYearMonth);
+        }
+      } else {
+        for ( let nowYearMonth = 1; nowYearMonth <= 12; nowYearMonth++ ) {
+          monthCount += calcNowMonthDays(nowYear, nowYearMonth);
+        }
+      }
+      return monthCount;
+    }
+
+    function calcNowMonthDays(year, month) {
+      return new Date(year, month, 0).getDate();
+    }
+
+    let count = calcContributionPointCount();
+    for ( let horizontal = 0; horizontal < Math.round(count / 7); horizontal++ ) {
+      for ( let vertical = 0; vertical < 7; vertical++ ) {
+        drawContributionPoint();
+      }
+    }
+  </script>
 </body>
 </html>
