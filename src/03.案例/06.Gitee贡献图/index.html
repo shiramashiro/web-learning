@@ -30,9 +30,9 @@
     align-content: flex-start;
   }
 
-  .right-side .diamonds {
-    width: var(--diamonds-size);
-    height: var(--diamonds-size);
+  .right-side .diamond {
+    width: var(--diamond-size);
+    height: var(--diamond-size);
     border: 1px solid #FFF;
     box-sizing: border-box;
     background-color: #EEEEEE;
@@ -51,66 +51,77 @@
       <div class="week">周四</div>
       <div class="week">周日</div>
     </div>
-    <div class="right-side" data-diamonds-size="0">
-
-    </div>
+    <div class="right-side" data-diamond-size="0"></div>
   </div>
   <script>
-    let date = new Date();
-    let nowYear = date.getFullYear();
-    let nowMonth = date.getMonth() + 1;
-    let nowDay = date.getDate();
-    let nowWeek = date.getDay();
-    let nowMonthDays = new Date(nowYear, nowMonth, 0).getDate();
-
-    // 这个月第一天星期几
-    function firstDayOfWeek() {
-      let date = new Date();
-      date.setDate(1);
-      return date.getDay();
-    }
-
-    function drawContributionPoint(contributionNum) {
-      let $rightSide = $("#contribution-chart .right-side");
-      let size = $rightSide.height() / 7;
-      $rightSide.css({ "--diamonds-size": `${ size }px` });
-      $rightSide.append(`<div class="diamonds"></div>`);
-    }
-
-    function calcContributionPointCount() {
+    function calcDiamondNumber() {
       let date = new Date();
       let nowYear = date.getFullYear();
       let nowMonth = date.getMonth() + 1;
       let remainingMonth = 12 - nowMonth;
-      // 当前月减去12月，如果不等于0就说明还得要去年的月份，假如是 6 月份，那么就要去年的 6 月份。
-      // 也就是说今年的1~6月份，以及去年的6~12月份。
       let monthCount = 0;
       if ( remainingMonth !== 0 ) {
         let lastYear = nowYear - 1;
         for ( let lastYearMonth = remainingMonth + 1; lastYearMonth <= 12; lastYearMonth++ ) {
-          monthCount += calcNowMonthDays(lastYear, lastYearMonth);
+          monthCount += getSpecifiedDate(lastYear, lastYearMonth).getDate();
         }
         for ( let nowYearMonth = nowMonth; nowYearMonth > 0; nowYearMonth-- ) {
-          monthCount += calcNowMonthDays(nowYear, nowYearMonth);
+          monthCount += getSpecifiedDate(nowYear, nowYearMonth).getDate();
         }
       } else {
         for ( let nowYearMonth = 1; nowYearMonth <= 12; nowYearMonth++ ) {
-          monthCount += calcNowMonthDays(nowYear, nowYearMonth);
+          monthCount += getSpecifiedDate(nowYear, nowYearMonth).getDate();
         }
       }
       return monthCount;
     }
 
-    function calcNowMonthDays(year, month) {
-      return new Date(year, month, 0).getDate();
+    function getSpecifiedDate(year, month, date = 0) {
+      return new Date(year, month, date);
     }
 
-    let count = calcContributionPointCount();
-    for ( let horizontal = 0; horizontal < Math.round(count / 7); horizontal++ ) {
-      for ( let vertical = 0; vertical < 7; vertical++ ) {
-        drawContributionPoint();
+    function drawDiamond(dom, num) {
+      dom.css({ "--diamond-size": `${ dom.height() / 7 }px` });
+      dom.append(`<div class="diamond" data-num="${ num }" data-content="${ num }个贡献"></div>`);
+    }
+
+    // 第一个要解决的问题就是，这个各自需要多少个，第二个问题就是，从左边开始，从今天往后推到364天是星期几？
+    function drawChartGrid() {
+      let $rightSide = $("#contribution-chart .right-side");
+      let HoritalNumber = Math.round(calcDiamondNumber() / 7);
+      for ( let horizontal = 0; horizontal < HoritalNumber; horizontal++ ) {
+        for ( let vertical = 0; vertical < 7; vertical++ ) {
+          drawDiamond($rightSide, 0);
+        }
       }
     }
+
+    function setDiamondStyle() {
+
+    }
+
+    function calcWeekOfYearAgoToday() {
+      let date = new Date();
+      let nowYear = date.getFullYear();
+      let nowMonth = date.getMonth() + 1;
+      let remainingMonth = 12 - nowMonth;
+      if ( remainingMonth !== 0 ) {
+        let lastYear = nowYear - 1;
+        let lastYearMonth = getSpecifiedDate(lastYear, remainingMonth - 1, 1);
+        let firstDayWeekOfLastYearMonth = lastYearMonth.getDay();
+        $("#contribution-chart .right-side .diamond").each(function (index, element) {
+          if ( firstDayWeekOfLastYearMonth === index + 1 ) {
+            $(this).css({ "background-color": "red" });
+
+          }
+        });
+      } else {
+
+      }
+    }
+
+    drawChartGrid();
+    calcWeekOfYearAgoToday();
   </script>
 </body>
 </html>
