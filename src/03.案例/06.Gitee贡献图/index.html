@@ -111,44 +111,20 @@
       }
     ];
 
-    function calcDiamondNumber() {
-      let date = new Date();
-      let nowYear = date.getFullYear();
-      let nowMonth = date.getMonth() + 1;
-      let remainingMonth = 12 - nowMonth;
-      let monthCount = 0;
-      if ( remainingMonth !== 0 ) {
-        for ( let nowYearMonth = nowMonth; nowYearMonth > 0; nowYearMonth-- ) {
-          monthCount += getSpecifiedDate(nowYear, nowYearMonth).getDate();
-        }
-        let lastYear = nowYear - 1;
-        for ( let lastYearMonth = remainingMonth + 1; lastYearMonth <= 12; lastYearMonth++ ) {
-          monthCount += getSpecifiedDate(lastYear, lastYearMonth).getDate();
-        }
-      } else {
-        for ( let nowYearMonth = 1; nowYearMonth <= 12; nowYearMonth++ ) {
-          monthCount += getSpecifiedDate(nowYear, nowYearMonth).getDate();
-        }
-      }
-      return monthCount;
-    }
-
-    function getSpecifiedDate(year, month, date = 0) {
-      return new Date(year, month, date);
-    }
-
     function drawChartGrid() {
       let $rightSide = $("#contribution-chart .right-side");
+      let diamondSize = $rightSide.height() / 7;
       let index = 0;
       for ( let horizontal = 0; horizontal < 53; horizontal++ ) {
         for ( let vertical = 0; vertical < 7; vertical++ ) {
-          $rightSide.css({ "--diamond-size": `${ $rightSide.height() / 7 }px` });
+          $rightSide.css({ "--diamond-size": `${ diamondSize }px` });
           $rightSide.append(`<div class="diamond" data-index="${ index }" data-content=""></div>`);
           index++;
         }
       }
     }
 
+    // 根据贡献数量设置小方块的颜色
     function setDiamondColor(dom, num) {
       if ( num <= 0 ) {
         $(dom).css({ "background-color": "#EEEEEE" });
@@ -165,33 +141,30 @@
       }
     }
 
+    function getAYearAgoToday(date) {
+      let year = date.getFullYear() - 1;
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      return new Date(`${ year }-${ month }-${ day }`);
+    }
+
     function calcWeekOfYearAgoToday() {
-      let date = new Date();
-      let nowYear = date.getFullYear();
-      let nowMonth = date.getMonth() + 1;
-      let remainingMonth = 12 - nowMonth;
-      let maxIndex = calcDiamondNumber() + 1;
-      if ( remainingMonth !== 0 ) {
-        let lastYear = nowYear - 1;
-        let lastYearMonth = getSpecifiedDate(lastYear, remainingMonth - 1, 1);
-        let firstDayWeekOfLastYearMonth = lastYearMonth.getDay();
-        let diamondsIndex = 0;
-        $(`#contribution-chart .right-side .diamond:gt(${ firstDayWeekOfLastYearMonth - 2 })`).each(function (index, element) {
-          if ( index === maxIndex ) {
-            return false;
+      let aYearAgoDate = getAYearAgoToday(new Date());
+      let extraWeek = 0;
+      $(`#contribution-chart .right-side .diamond`).each(function (index, element) {
+        if ( index === 366 + extraWeek - 2 ) {
+          return false;
+        } else if ( index >= aYearAgoDate.getDay() ) {
+          if ( diamondData[index] ) {
+            $(element)[0].dataset.content = `${ diamondData[index].num }个贡献：${ diamondData[index].date }`;
+            setDiamondColor(element, diamondData[index].num);
           } else {
-            if ( diamondData[diamondsIndex] ) {
-              $(this)[0].dataset.content = `${ diamondData[diamondsIndex].num }个贡献：${ diamondData[diamondsIndex].date }`;
-              setDiamondColor(this, diamondData[diamondsIndex].num);
-              diamondsIndex++;
-            } else {
-              $(this).css({ "background-color": "#EEEEEE" });
-            }
+            $(element).css({ "background-color": "#EEEEEE" });
           }
-        });
-      } else {
-        // 暂时不写
-      }
+        } else {
+          extraWeek++;
+        }
+      });
     }
 
     drawChartGrid();
