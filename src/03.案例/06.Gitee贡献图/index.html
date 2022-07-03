@@ -48,7 +48,7 @@
     <div class="right-side" data-diamond-size="0"></div>
   </div>
   <script>
-    let diamondData = [
+    let diamonds = [
       {
         date: "2021-6-29",
         num: 1
@@ -125,50 +125,81 @@
     }
 
     // 根据贡献数量设置小方块的颜色
-    function setDiamondColor(dom, num) {
-      if ( num <= 0 ) {
-        $(dom).css({ "background-color": "#EEEEEE" });
-      } else if ( num <= 5 ) {
-        $(dom).css({ "background-color": "#D6E685" });
-      } else if ( num > 11 ) {
-        $(dom).css({ "background-color": "#8CC665" });
-      } else if ( num > 16 ) {
-        $(dom).css({ "background-color": "#44A340" });
-      } else if ( num > 21 ) {
-        $(dom).css({ "background-color": "#1E6823" });
+    function setDiamondColor(diamondDom, times) {
+      if ( times <= 0 ) {
+        $(diamondDom).css({ "background-color": "#EEEEEE" });
+      } else if ( times <= 5 ) {
+        $(diamondDom).css({ "background-color": "#D6E685" });
+      } else if ( times > 11 ) {
+        $(diamondDom).css({ "background-color": "#8CC665" });
+      } else if ( times > 16 ) {
+        $(diamondDom).css({ "background-color": "#44A340" });
+      } else if ( times > 21 ) {
+        $(diamondDom).css({ "background-color": "#1E6823" });
       } else {
-        $(dom).css({ "background-color": "#EEEEEE" });
+        $(diamondDom).css({ "background-color": "#EEEEEE" });
       }
     }
 
-    function getAYearAgoToday(date) {
+    function getLastYearToday(date) {
       let year = date.getFullYear() - 1;
       let month = date.getMonth() + 1;
       let day = date.getDate();
       return new Date(`${ year }-${ month }-${ day }`);
     }
 
-    function calcWeekOfYearAgoToday() {
-      let aYearAgoDate = getAYearAgoToday(new Date());
-      let extraWeek = 0;
-      $(`#contribution-chart .right-side .diamond`).each(function (index, element) {
-        if ( index === 366 + extraWeek - 2 ) {
-          return false;
-        } else if ( index >= aYearAgoDate.getDay() ) {
-          if ( diamondData[index] ) {
-            $(element)[0].dataset.content = `${ diamondData[index].num }个贡献：${ diamondData[index].date }`;
-            setDiamondColor(element, diamondData[index].num);
+    // 根据星期几判断该使用哪一种循环
+    function traverseDiamond(day) {
+      if ( day === 0 ) {
+        $(`#contribution-chart .right-side .diamond:gt(5)`).each((index, el) => {
+          if ( index === 366 ) {
+            return false;
           } else {
-            $(element).css({ "background-color": "#EEEEEE" });
+            if ( diamonds[index] ) {
+              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
+              setDiamondColor(el, diamonds[index].num);
+            } else {
+              $(el).css({ "background-color": "#EEEEEE" });
+            }
           }
-        } else {
-          extraWeek++;
-        }
-      });
+        });
+      } else if ( day === 1 ) {
+        $(`#contribution-chart .right-side .diamond`).each((index, el) => {
+          if ( index === 366 ) {
+            return false;
+          } else {
+            if ( diamonds[index] ) {
+              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
+              setDiamondColor(el, diamonds[index].num);
+            } else {
+              $(el).css({ "background-color": "#EEEEEE" });
+            }
+          }
+        });
+      } else {
+        $(`#contribution-chart .right-side .diamond:gt(${ day - 2 })`).each((index, el) => {
+          if ( index === 366 ) {
+            return false;
+          } else {
+            if ( diamonds[index] ) {
+              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
+              setDiamondColor(el, diamonds[index].num);
+            } else {
+              $(el).css({ "background-color": "#EEEEEE" });
+            }
+          }
+        });
+      }
+    }
+
+    // 0 : 星期天；1 是星期一
+    function drawRealDiamond() {
+      let lastYearDate = getLastYearToday(new Date("2022-7-8"));
+      traverseDiamond(lastYearDate.getDay());
     }
 
     drawChartGrid();
-    calcWeekOfYearAgoToday();
+    drawRealDiamond();
   </script>
 </body>
 </html>
