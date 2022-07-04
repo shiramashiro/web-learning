@@ -37,6 +37,26 @@
     box-sizing: border-box;
     background-color: white;
   }
+
+  .a {
+    background-color: #D6E685 !important;
+  }
+
+  .b {
+    background-color: #8CC665 !important;
+  }
+
+  .c {
+    background-color: #44A340 !important;
+  }
+
+  .d {
+    background-color: #1E6823 !important;
+  }
+
+  .e {
+    background-color: #EEEEEE !important;
+  }
 </style>
 <body>
   <div id="contribution-chart">
@@ -118,26 +138,24 @@
       for ( let horizontal = 0; horizontal < 53; horizontal++ ) {
         for ( let vertical = 0; vertical < 7; vertical++ ) {
           $rightSide.css({ "--diamond-size": `${ diamondSize }px` });
-          $rightSide.append(`<div class="diamond" data-index="${ index }" data-content=""></div>`);
+          $rightSide.append(`<div class="diamond" data-index="${ index }"></div>`);
           index++;
         }
       }
+      drawRealDiamond();
     }
 
-    // 根据贡献数量设置小方块的颜色
     function setDiamondColor(diamondDom, times) {
-      if ( times <= 0 ) {
-        $(diamondDom).css({ "background-color": "#EEEEEE" });
-      } else if ( times <= 5 ) {
-        $(diamondDom).css({ "background-color": "#D6E685" });
-      } else if ( times > 11 ) {
-        $(diamondDom).css({ "background-color": "#8CC665" });
-      } else if ( times > 16 ) {
-        $(diamondDom).css({ "background-color": "#44A340" });
-      } else if ( times > 21 ) {
-        $(diamondDom).css({ "background-color": "#1E6823" });
+      if ( times > 1 && times <= 5 ) {
+        $(diamondDom).addClass("a");
+      } else if ( times > 5 && times <= 10 ) {
+        $(diamondDom).addClass("b");
+      } else if ( times > 10 && times <= 15 ) {
+        $(diamondDom).addClass("c");
+      } else if ( times > 15 && times <= 20 ) {
+        $(diamondDom).addClass("d");
       } else {
-        $(diamondDom).css({ "background-color": "#EEEEEE" });
+        $(diamondDom).addClass("e");
       }
     }
 
@@ -148,58 +166,38 @@
       return new Date(`${ year }-${ month }-${ day }`);
     }
 
-    // 根据星期几判断该使用哪一种循环
-    function traverseDiamond(day) {
-      if ( day === 0 ) {
-        $(`#contribution-chart .right-side .diamond:gt(5)`).each((index, el) => {
-          if ( index === 366 ) {
+    function traverseDiamonds(validate, dayGap) {
+      console.log(dayGap);
+      $(`#contribution-chart .right-side .diamond`).each((i, el) => {
+        if ( validate(i) ) {
+          if ( i === 365 + dayGap ) {
             return false;
           } else {
-            if ( diamonds[index] ) {
-              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
-              setDiamondColor(el, diamonds[index].num);
+            if ( diamonds[i] ) {
+              $(el).attr("data-content", () => `${ diamonds[i].num }个贡献：${ diamonds[i].date }`);
+              setDiamondColor(el, diamonds[i].num);
             } else {
-              $(el).css({ "background-color": "#EEEEEE" });
+              $(el).addClass("e");
             }
           }
-        });
-      } else if ( day === 1 ) {
-        $(`#contribution-chart .right-side .diamond`).each((index, el) => {
-          if ( index === 366 ) {
-            return false;
-          } else {
-            if ( diamonds[index] ) {
-              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
-              setDiamondColor(el, diamonds[index].num);
-            } else {
-              $(el).css({ "background-color": "#EEEEEE" });
-            }
-          }
-        });
-      } else {
-        $(`#contribution-chart .right-side .diamond:gt(${ day - 2 })`).each((index, el) => {
-          if ( index === 366 ) {
-            return false;
-          } else {
-            if ( diamonds[index] ) {
-              $(el)[0].dataset.content = `${ diamonds[index].num }个贡献：${ diamonds[index].date }`;
-              setDiamondColor(el, diamonds[index].num);
-            } else {
-              $(el).css({ "background-color": "#EEEEEE" });
-            }
-          }
-        });
+        }
+      });
+    }
+
+    function drawRealDiamond() {
+      let nowDate = new Date();
+      let weekIndex = getLastYearToday(nowDate).getDay();
+      let nowWeekIndex = nowDate.getDay() - 1;
+      if ( weekIndex === 0 ) {
+        traverseDiamonds((i) => i > 5, nowWeekIndex);
+      } else if ( weekIndex === 1 ) {
+        traverseDiamonds(() => true, nowWeekIndex);
+      } else if ( weekIndex >= 2 ) {
+        traverseDiamonds((i) => i > weekIndex - 2, nowWeekIndex);
       }
     }
 
-    // 0 : 星期天；1 是星期一
-    function drawRealDiamond() {
-      let lastYearDate = getLastYearToday(new Date("2022-7-8"));
-      traverseDiamond(lastYearDate.getDay());
-    }
-
     drawChartGrid();
-    drawRealDiamond();
   </script>
 </body>
 </html>
