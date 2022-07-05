@@ -69,7 +69,6 @@
     text-align: center;
     padding: 5px;
     box-sizing: border-box;
-    display: none;
     position: absolute;
     width: 145px;
     height: 30px;
@@ -89,6 +88,14 @@
     align-content: center;
     align-items: center;
     justify-content: center;
+  }
+
+  .show-popup {
+    display: block;
+  }
+
+  .close-popup {
+    display: none;
   }
 </style>
 <body>
@@ -202,16 +209,13 @@
     function showDiamondPopup(detailData, el) {
       // 这个 if 判断只是临时的，避免报错，每天不管有没有贡献度都有数据对应
       if ( detailData ) {
-        // 1. 鼠标移入，添加该节点
-        // 2. 再次移入，不添加，设置 css 的样式为 display
-        let temp = `
-          <div class="diamond-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
+        $(el).after(`
+          <div class="diamond-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
             <div>
               ${ detailData.num }个贡献：${ detailData.date }
             </div>
           </div>
-        `;
-        $(el).after(temp);
+        `);
       }
     }
 
@@ -230,20 +234,18 @@
             }
 
             $(el).on({
-              "mouseenter": function () {
-                console.dir(el);
-                let ispopup = $(el).attr("data-ispopup");
-                if ( ispopup ) {
-                  $(el).next().css({ "display": "block" });
-                } else {
-                  $(el).attr("data-ispopup", () => "true");
-                  showDiamondPopup(diamonds[i], el);
-                }
-                $(el).addClass("diamond-hover");
+              "mouseenter": () => {
+                showDiamondPopup(diamonds[i], el);
+                $(el).addClass("diamond-hover")
+                     .next(".diamond-popup")
+                     .addClass("show-popup")
+                     .removeClass("close-popup");
               },
-              "mouseleave": function () {
-                $(el).removeClass("diamond-hover");
-                $(el).next().css({ "display": "none" });
+              "mouseleave": () => {
+                $(el).removeClass("diamond-hover")
+                     .next(".diamond-popup")
+                     .addClass("close-popup")
+                     .removeClass("show-popup");
               }
             });
           }
