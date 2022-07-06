@@ -6,32 +6,62 @@
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 </head>
 <style>
-  #contribution-chart {
-    height: 100px;
-    display: flex;
-    flex-direction: row;
+  #cb-chart {
+    width: 940px;
+    height: 140px;
   }
 
-  #contribution-chart .left-side,
-  #contribution-chart .right-side {
+  #cb-chart .top-bar {
+    display: flex;
+  }
+
+  #cb-chart .top-bar .white-cell {
+    width: 8%;
+  }
+
+  #cb-chart .top-bar .months {
+    font-size: 12px;
+    height: 20%;
+    width: 92%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #cb-chart .bottom {
+    display: flex;
+    height: 80%;
+    width: 100%;
+  }
+
+  .bottom .left-side {
+    width: 8%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
-  #contribution-chart .left-side {
-    width: 10%;
+  .bottom .left-side .week {
+    font-size: 12px;
   }
 
-  #contribution-chart .right-side {
+  .bottom .right-side {
     position: relative;
-    width: 90%;
+    width: 92%;
+    height: 100%;
+    display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
   }
 
-  .right-side .diamond {
+  .bottom .right-side .diamond {
     width: var(--diamond-size);
     height: var(--diamond-size);
     border: 1px solid #FFF;
@@ -99,173 +129,24 @@
   }
 </style>
 <body>
-  <div id="contribution-chart">
-    <div class="left-side">
-      <div class="week">周一</div>
-      <div class="week">周四</div>
-      <div class="week">周日</div>
+  <div id="cb-chart">
+    <div class="top-bar">
+      <div class="white-cell"></div>
+      <div class="months"></div>
     </div>
-    <div class="right-side" data-diamond-size="0"></div>
+    <div class="bottom">
+      <div class="left-side">
+        <div class="week">周一</div>
+        <div class="week">周四</div>
+        <div class="week">周日</div>
+      </div>
+      <div class="right-side" data-diamond-size="0"></div>
+    </div>
   </div>
+  <script src="./js/data/dates.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/utils.js"></script>
   <script>
-    let diamonds = [
-      {
-        date: "2021-6-29",
-        num: 1
-      },
-      {
-        date: "2021-6-30",
-        num: 2
-      },
-      {
-        date: "2021-7-1",
-        num: 0
-      },
-      {
-        date: "2021-7-2",
-        num: 4
-      },
-      {
-        date: "2021-7-3",
-        num: 6
-      },
-      {
-        date: "2021-7-4",
-        num: 0
-      },
-      {
-        date: "2021-7-5",
-        num: 0
-      },
-      {
-        date: "2021-7-6",
-        num: 12
-      },
-      {
-        date: "2021-7-7",
-        num: 0
-      },
-      {
-        date: "2021-7-8",
-        num: 0
-      },
-      {
-        date: "2021-7-9",
-        num: 4
-      },
-      {
-        date: "2021-7-10",
-        num: 0
-      },
-      {
-        date: "2021-7-11",
-        num: 0
-      },
-      {
-        date: "2021-7-12",
-        num: 4
-      },
-      {
-        date: "2021-7-13",
-        num: 15
-      }
-    ];
-
-    function drawChartGrid() {
-      let $rightSide = $("#contribution-chart .right-side");
-      let diamondSize = $rightSide.height() / 7;
-      let index = 0;
-      for ( let horizontal = 0; horizontal < 53; horizontal++ ) {
-        for ( let vertical = 0; vertical < 7; vertical++ ) {
-          $rightSide.css({ "--diamond-size": `${ diamondSize }px` });
-          $rightSide.append(`<div class="diamond" data-index="${ index }"></div>`);
-          index++;
-        }
-      }
-      drawRealDiamond();
-    }
-
-    function setDiamondColor(diamondDom, times) {
-      if ( times > 1 && times <= 5 ) {
-        $(diamondDom).addClass("a");
-      } else if ( times > 5 && times <= 10 ) {
-        $(diamondDom).addClass("b");
-      } else if ( times > 10 && times <= 15 ) {
-        $(diamondDom).addClass("c");
-      } else if ( times > 15 && times <= 20 ) {
-        $(diamondDom).addClass("d");
-      } else {
-        $(diamondDom).addClass("e");
-      }
-    }
-
-    function getLastYearToday(date) {
-      let year = date.getFullYear() - 1;
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      return new Date(`${ year }-${ month }-${ day }`);
-    }
-
-    function showDiamondPopup(detailData, el) {
-      // 这个 if 判断只是临时的，避免报错，每天不管有没有贡献度都有数据对应
-      if ( detailData ) {
-        $(el).after(`
-          <div class="diamond-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
-            <div>
-              ${ detailData.num }个贡献：${ detailData.date }
-            </div>
-          </div>
-        `);
-      }
-    }
-
-    function traverseDiamonds(validate, dayGap) {
-      $(`#contribution-chart .right-side .diamond`).each((i, el) => {
-        if ( validate(i) ) {
-          if ( i === 365 + dayGap ) {
-            return false;
-          } else {
-            // 这个 if 判断只是临时的，避免报错，每天不管有没有贡献度都有数据对应
-            if ( diamonds[i] ) {
-              $(el).attr("data-content", () => `${ diamonds[i].num }个贡献：${ diamonds[i].date }`);
-              setDiamondColor(el, diamonds[i].num);
-            } else {
-              $(el).addClass("e");
-            }
-
-            $(el).on({
-              "mouseenter": () => {
-                showDiamondPopup(diamonds[i], el);
-                $(el).addClass("diamond-hover")
-                     .next(".diamond-popup")
-                     .addClass("show-popup")
-                     .removeClass("close-popup");
-              },
-              "mouseleave": () => {
-                $(el).removeClass("diamond-hover")
-                     .next(".diamond-popup")
-                     .addClass("close-popup")
-                     .removeClass("show-popup");
-              }
-            });
-          }
-        }
-      });
-    }
-
-    function drawRealDiamond() {
-      let nowDate = new Date();
-      let weekIndex = getLastYearToday(nowDate).getDay();
-      let nowWeekIndex = nowDate.getDay() - 1;
-      if ( weekIndex === 0 ) {
-        traverseDiamonds((i) => i > 5, nowWeekIndex);
-      } else if ( weekIndex === 1 ) {
-        traverseDiamonds(() => true, nowWeekIndex);
-      } else if ( weekIndex >= 2 ) {
-        traverseDiamonds((i) => i > weekIndex - 2, nowWeekIndex);
-      }
-    }
-
     drawChartGrid();
   </script>
 </body>
