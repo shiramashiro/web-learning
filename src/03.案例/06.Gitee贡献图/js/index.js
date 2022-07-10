@@ -65,13 +65,13 @@ function traverseDiamonds() {
 }
 
 function setDiamondColor(diamondDom, number) {
-  if ( number > 1 && number <= 5 ) {
+  if ( number > 0 && number <= 5 ) {
     $(diamondDom).addClass("a");
   } else if ( number > 5 && number <= 10 ) {
     $(diamondDom).addClass("b");
   } else if ( number > 10 && number <= 15 ) {
     $(diamondDom).addClass("c");
-  } else if ( number > 15 && number <= 20 ) {
+  } else if ( number > 15 ) {
     $(diamondDom).addClass("d");
   } else {
     $(diamondDom).addClass("e");
