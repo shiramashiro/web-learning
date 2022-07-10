@@ -1,54 +1,26 @@
 function drawChartGrid() {
-  let pointIndex = 0;
+  let indexOfPoint = 0;
   let $el = $("#cb-chart .bottom .right-side");
   $el.css({ "--point-size": `${ $el.height() / 7 }px` });
   for ( let horizontal = 0; horizontal < 54; horizontal++ ) {
     for ( let vertical = 0; vertical < 7; vertical++ ) {
-      $el.append(`<div class="point" serial="${ pointIndex }"></div>`);
-      pointIndex++;
+      $el.append(`<div class="point" serial="${ indexOfPoint }"></div>`);
+      indexOfPoint++;
     }
   }
   traverseDiamonds();
 }
 
-function drawDiamonds(index, points, monitor) {
-  if ( index === 0 ) {
-    $(`#cb-chart .bottom .right-side div.point[serial=5]`).nextAll().each((i, el) => {
-      if ( points[i] ) {
-        $(el).attr("data-content", () => `${ points[i].number }个贡献：${ points[i].date }`);
-        setDiamondColor(el, points[i].number);
-        monitor(i, el);
-      }
-    });
-  } else if ( index === 1 ) {
-    $(`#cb-chart .bottom .right-side div.point[serial=0]`).each((i, el) => {
-      if ( points[i] ) {
-        $(el).attr("data-content", () => `${ points[i].number }个贡献：${ points[i].date }`);
-        setDiamondColor(el, points[i].number);
-        monitor(i, el);
-      }
-    });
-  } else {
-    $(`#cb-chart .bottom .right-side div.point[serial=${ index - 2 }]`).nextAll().each((i, el) => {
-      if ( points[i] ) {
-        $(el).attr("data-content", () => `${ points[i].number }个贡献：${ points[i].date }`);
-        setDiamondColor(el, points[i].number);
-        monitor(i, el);
-      }
-    });
-  }
-}
+function drawDiamonds(index, data) {
+  let start = index - 1 < 0 ? 6 : index - 1;
+  let end = start === 6 ? 372 : 365 + index;
 
-function traverseDiamonds() {
-  let nowDate = new Date();
-  let oldDate = getLastYearToday(nowDate);
-  let oldWeekIndex = oldDate.getDay();
-  let points = getPointsData(oldDate);
-  drawMonths(oldDate);
-  drawDiamonds(oldWeekIndex, points, function (i, el) {
+  $(`#cb-chart .bottom .right-side .point`).slice(start, end).each((i, el) => {
+    $(el).attr("data-content", () => `${ data[i].number }个贡献：${ data[i].date }`);
+    setDiamondColor(el, data[i].number);
     $(el).on({
       "mouseenter": () => {
-        showDiamondPopup(points[i], el);
+        showDiamondPopup(data[i], el);
         $(el).addClass("point-hover")
              .next(".point-popup")
              .addClass("show-popup")
@@ -64,17 +36,27 @@ function traverseDiamonds() {
   });
 }
 
-function setDiamondColor(diamondDom, number) {
+function traverseDiamonds() {
+  let nowDate = new Date();
+  let year = nowDate.getFullYear();
+  let month = nowDate.getMonth();
+  let day = nowDate.getDate();
+  let oldDate = new Date(`${ year - 1 }-${ month + 1 }-${ day }`);
+  drawMonths(oldDate);
+  drawDiamonds(oldDate.getDay(), getPointsData(oldDate));
+}
+
+function setDiamondColor(el, number) {
   if ( number > 0 && number <= 5 ) {
-    $(diamondDom).addClass("a");
+    $(el).addClass("a");
   } else if ( number > 5 && number <= 10 ) {
-    $(diamondDom).addClass("b");
+    $(el).addClass("b");
   } else if ( number > 10 && number <= 15 ) {
-    $(diamondDom).addClass("c");
+    $(el).addClass("c");
   } else if ( number > 15 ) {
-    $(diamondDom).addClass("d");
+    $(el).addClass("d");
   } else {
-    $(diamondDom).addClass("e");
+    $(el).addClass("e");
   }
 }
 
@@ -86,15 +68,13 @@ function showDiamondPopup(data, el) {
   `);
 }
 
-function drawMonths(oldDate) {
-  let oldDateMonthIndex = oldDate.getMonth();
-  for ( let i = 0; i < 12; i++ ) {
-    if ( oldDateMonthIndex === 12 ) {
-      oldDateMonthIndex = 0;
-    }
+function drawMonths(date) {
+  let indexOfMonth = date.getMonth();
+  for ( let m = 0; m < 12; m++ ) {
+    if ( indexOfMonth === 12 ) indexOfMonth = 0;
     $("#cb-chart .top-bar .months").append(`
-      <div class="month">${ months[oldDateMonthIndex] }</div>
+      <div class="month">${ months[indexOfMonth] }</div>
     `);
-    oldDateMonthIndex++;
+    indexOfMonth++;
   }
 }
