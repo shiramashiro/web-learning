@@ -61,11 +61,13 @@ function setDiamondColor(el, number) {
 }
 
 function showDiamondPopup(data, el) {
-  $(el).after(`
-    <div class="point-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
-      <div>${ data.number }个贡献：${ data.date }</div>
-    </div>
-  `);
+  if ( !$(el).next(".point-popup").length ) {
+    $(el).after(`
+      <div class="point-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
+        <div>${ data.number }个贡献：${ data.date }</div>
+      </div>
+    `);
+  }
 }
 
 function drawMonths(date) {
