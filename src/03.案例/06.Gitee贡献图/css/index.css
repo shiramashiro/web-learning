@@ -61,26 +61,6 @@
   background-color: white;
 }
 
-.a {
-  background-color: #D6E685 !important;
-}
-
-.b {
-  background-color: #8CC665 !important;
-}
-
-.c {
-  background-color: #44A340 !important;
-}
-
-.d {
-  background-color: #1E6823 !important;
-}
-
-.e {
-  background-color: #EEEEEE !important;
-}
-
 .point-hover {
   cursor: pointer;
   border: 1px solid #333333 !important;

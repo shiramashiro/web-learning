@@ -1,14 +1,19 @@
 function drawChartGrid() {
-  let indexOfPoint = 0;
   let $el = $("#cb-chart .bottom .right-side");
-  $el.css({ "--point-size": `${ $el.height() / 7 }px` });
-  for ( let horizontal = 0; horizontal < 54; horizontal++ ) {
-    for ( let vertical = 0; vertical < 7; vertical++ ) {
-      $el.append(`<div class="point" serial="${ indexOfPoint }"></div>`);
-      indexOfPoint++;
+  $el.css("--point-size", `${ $el.height() / 7 }px`);
+  for ( let h = 0; h < 54; h++ ) {
+    for ( let v = 0; v < 7; v++ ) {
+      $el.append(`<div class="point"></div>`);
     }
   }
-  traverseDiamonds();
+
+  let nowDate = new Date();
+  let year = nowDate.getFullYear();
+  let month = nowDate.getMonth();
+  let day = nowDate.getDate();
+  let oldDate = new Date(`${ year - 1 }-${ month + 1 }-${ day }`);
+  drawDiamonds(oldDate.getDay(), getPointsData(oldDate));
+  drawMonths(oldDate);
 }
 
 function drawDiamonds(index, data) {
@@ -16,7 +21,6 @@ function drawDiamonds(index, data) {
   let end = start === 6 ? 372 : 365 + index;
 
   $(`#cb-chart .bottom .right-side .point`).slice(start, end).each((i, el) => {
-    $(el).attr("data-content", () => `${ data[i].number }个贡献：${ data[i].date }`);
     setDiamondColor(el, data[i].number);
     $(el).on({
       "mouseenter": () => {
@@ -34,16 +38,6 @@ function drawDiamonds(index, data) {
       }
     });
   });
-}
-
-function traverseDiamonds() {
-  let nowDate = new Date();
-  let year = nowDate.getFullYear();
-  let month = nowDate.getMonth();
-  let day = nowDate.getDate();
-  let oldDate = new Date(`${ year - 1 }-${ month + 1 }-${ day }`);
-  drawMonths(oldDate);
-  drawDiamonds(oldDate.getDay(), getPointsData(oldDate));
 }
 
 function setDiamondColor(el, number) {
