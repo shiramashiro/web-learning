@@ -6,24 +6,30 @@ function getLastYearToday(date) {
 }
 
 function getPointsData(date) {
-  let result = [];
-  let startYear = date.getFullYear();
-  let startMonth = date.getMonth();
-  let resultIndex = 0;
-  for ( let i = 0; i < 12; i++ ) {
-    let days = new Date(startYear, startMonth, 0).getDate();
-    for ( let d = 0; d < days; d++ ) {
-      result.push({
-        date: `${ startYear }-${ startMonth + 1 }-${ d + 1 }`,
-        num: Math.floor(Math.random() * 30)
-      });
-      resultIndex++;
+  let outcome = [];
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let end = day;
+  for ( let m = 0; m < 12; m++ ) {
+    let maxDayOfMonth = new Date(year, month, 0).getDate();
+    for ( let d = day; d <= maxDayOfMonth; d++ ) {
+      let count = Math.floor(Math.random() * 30);
+      let date = `${ year }-${ month }-${ d }`;
+      outcome.push({ date, count });
     }
-    startMonth++;
-    if ( startMonth >= 12 ) {
-      startMonth = 0;
-      startYear++;
+    month++;
+    day = 1;
+    if ( month > 12 ) {
+      month = 1;
+      year++;
     }
   }
-  return result;
+
+  for ( let d = 1; d <= end; d++ ) {
+    let count = Math.floor(Math.random() * 30);
+    let date = `${ year }-${ month }-${ d }`;
+    outcome.push({ date, count });
+  }
+  return outcome;
 }

@@ -35,8 +35,8 @@ function traverseDiamonds(valid, gap, points) {
       } else {
         // 这个 if 判断只是临时的，避免报错，每天不管有没有贡献度都有数据对应
         if ( points[i] ) {
-          $(el).attr("data-content", () => `${ points[i].num }个贡献：${ points[i].date }`);
-          setDiamondColor(el, points[i].num);
+          $(el).attr("data-content", () => `${ points[i].count }个贡献：${ points[i].date }`);
+          setDiamondColor(el, points[i].count);
         } else {
           $(el).addClass("e");
         }
@@ -80,7 +80,7 @@ function showDiamondPopup(detailData, el) {
   if ( detailData ) {
     $(el).after(`
       <div class="point-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
-        <div>${ detailData.num }个贡献：${ detailData.date }</div>
+        <div>${ detailData.count }个贡献：${ detailData.date }</div>
       </div>
     `);
   }
