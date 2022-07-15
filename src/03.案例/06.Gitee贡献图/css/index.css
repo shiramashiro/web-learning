@@ -7,7 +7,7 @@
   display: flex;
 }
 
-#cb-chart .top-bar .white-cell {
+#cb-chart .top-bar .occupation {
   width: 8%;
 }
 
@@ -29,7 +29,7 @@
   width: 100%;
 }
 
-.bottom .left-side {
+#cb-chart .bottom .left-side {
   width: 8%;
   height: 100%;
   display: flex;
@@ -37,11 +37,11 @@
   justify-content: space-between;
 }
 
-.bottom .left-side .week {
+#cb-chart .bottom .left-side .week {
   font-size: 12px;
 }
 
-.bottom .right-side {
+#cb-chart .bottom .right-side {
   position: relative;
   width: 92%;
   height: 100%;
@@ -53,7 +53,7 @@
   align-items: center;
 }
 
-.bottom .right-side .point {
+#cb-chart .bottom .right-side .point {
   width: var(--point-size);
   height: var(--point-size);
   border: 1px solid #FFF;
@@ -92,16 +92,16 @@
   justify-content: center;
 }
 
-.show-popup {
+.open-point-popup {
   display: block;
-  animation: ShowPopup 0.2s ease;
+  animation: OpenPopupAnimation 0.2s ease;
 }
 
-.close-popup {
+.close-point-popup {
   display: none;
 }
 
-@keyframes ShowPopup {
+@keyframes OpenPopupAnimation {
   0% {
     transform: scale(0, 0);
   }

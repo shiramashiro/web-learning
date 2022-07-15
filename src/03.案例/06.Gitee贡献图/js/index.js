@@ -1,4 +1,4 @@
-function drawChartGrid() {
+function drawChartGrid(pointsData, onClickPoint) {
   let $el = $("#cb-chart .bottom .right-side");
   $el.css("--point-size", `${ $el.height() / 7 }px`);
   for ( let h = 0; h < 54; h++ ) {
@@ -8,56 +8,54 @@ function drawChartGrid() {
   }
 
   let nowDate = new Date();
-  let year = nowDate.getFullYear();
-  let month = nowDate.getMonth();
-  let day = nowDate.getDate();
-  let oldDate = new Date(`${ year - 1 }-${ month + 1 }-${ day }`);
-  drawDiamonds(oldDate.getDay(), getPointsData(oldDate));
+  let oldDate = new Date(`${ nowDate.getFullYear() - 1 }-${ nowDate.getMonth() + 1 }-${ nowDate.getDate() }`);
+  drawPoints(oldDate.getDay(), pointsData(oldDate), onClickPoint);
   drawMonths(oldDate);
 }
 
-function drawDiamonds(index, data) {
+function drawPoints(index, data, onClickPoint) {
   let start = index - 1 < 0 ? 6 : index - 1;
   let end = start === 6 ? 372 : 365 + index;
 
   $(`#cb-chart .bottom .right-side .point`).slice(start, end).each((i, el) => {
-    setDiamondColor(el, data[i].number);
+    setPointColor(el, data[i].number);
     $(el).on({
       "mouseenter": () => {
-        showDiamondPopup(data[i], el);
+        openPointPopup(data[i], el);
         $(el).addClass("point-hover")
              .next(".point-popup")
-             .addClass("show-popup")
-             .removeClass("close-popup");
+             .addClass("open-point-popup")
+             .removeClass("close-point-popup");
       },
       "mouseleave": () => {
         $(el).removeClass("point-hover")
              .next(".point-popup")
-             .addClass("close-popup")
-             .removeClass("show-popup");
-      }
+             .addClass("close-point-popup")
+             .removeClass("open-point-popup");
+      },
+      "click": () => onClickPoint(i, el, data[i])
     });
   });
 }
 
-function setDiamondColor(el, number) {
+function setPointColor(el, number) {
   if ( number > 0 && number <= 5 ) {
-    $(el).addClass("a");
+    $(el).addClass("a-type-point");
   } else if ( number > 5 && number <= 10 ) {
-    $(el).addClass("b");
+    $(el).addClass("b-type-point");
   } else if ( number > 10 && number <= 15 ) {
-    $(el).addClass("c");
+    $(el).addClass("c-type-point");
   } else if ( number > 15 ) {
-    $(el).addClass("d");
+    $(el).addClass("d-type-point");
   } else {
-    $(el).addClass("e");
+    $(el).addClass("e-type-point");
   }
 }
 
-function showDiamondPopup(data, el) {
+function openPointPopup(data, el) {
   if ( !$(el).next(".point-popup").length ) {
     $(el).after(`
-      <div class="point-popup close-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
+      <div class="point-popup close-point-popup" style="top: ${ el.offsetTop }px; left: ${ el.offsetLeft + el.clientWidth * 1.5 }px;">
         <div>${ data.number }个贡献：${ data.date }</div>
       </div>
     `);

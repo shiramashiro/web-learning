@@ -5,12 +5,12 @@
   <title>贡献图</title>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <link href="./css/index.css" rel="stylesheet">
-  <link href="./css/box-theme.css" rel="stylesheet">
+  <link href="css/point-theme.css" rel="stylesheet">
 </head>
 <body>
   <div id="cb-chart">
     <div class="top-bar">
-      <div class="white-cell"></div>
+      <div class="occupation"></div>
       <div class="months"></div>
     </div>
     <div class="bottom">
@@ -22,11 +22,30 @@
       <div class="right-side"></div>
     </div>
   </div>
+  <div class="detail">
+    <div class="header">
+      <div class="date"></div>
+      <div class="desc"></div>
+    </div>
+    <div class="contributions"></div>
+  </div>
   <script src="./js/literals.js"></script>
   <script src="./js/index.js"></script>
   <script src="./js/utils.js"></script>
   <script>
-    drawChartGrid();
+    function openDetail(data) {
+      let $detail = $(".detail");
+      $detail.find(".header .date").text(data.date);
+      $detail.find(".header .desc").text(`提交了${ data.number }次`);
+      // ...
+    }
+
+    drawChartGrid(
+          (date) => getPointsData(date),
+          (i, el, data) => {
+            openDetail(data);
+          }
+    );
   </script>
 </body>
 </html>
