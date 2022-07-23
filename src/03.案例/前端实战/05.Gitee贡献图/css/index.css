@@ -5,6 +5,8 @@
 
 #cb-chart .top-bar {
   display: flex;
+  height: 20%;
+  width: 100%;
 }
 
 #cb-chart .top-bar .occupation {
@@ -13,7 +15,7 @@
 
 #cb-chart .top-bar .months {
   font-size: 12px;
-  height: 20%;
+  height: 100%;
   width: 92%;
   display: flex;
   flex-direction: row;
